@@ -1,0 +1,44 @@
+{
+    "ciudades": [
+        {
+            "id": 1,
+             "name": "Bogota"
+        },
+        {
+            "id": 2,
+            "name": "Medellín" 
+        },
+        {
+            "id": 3,
+            "name": "Cali" 
+        },
+        {
+            "id": 4,
+            "name": "Manizales" 
+        },
+        {
+            "id": 5,
+            "name": "Pasto" 
+        },
+        {
+            "id": 6,
+            "name": "Bucaramanga" 
+        },
+        {
+            "id": 7,
+            "name": "Pereira" 
+        },
+        {
+            "id": 8,
+            "name": "Popayan" 
+        },
+        {
+            "id": 9,
+            "name": "Barranquilla" 
+        },
+        {
+            "id": 10,
+            "name": "Cartagena" 
+        }
+    ]
+}
