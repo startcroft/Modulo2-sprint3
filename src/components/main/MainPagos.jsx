@@ -1,6 +1,6 @@
 import React from 'react'
 import { pagosTarjetas, pagosEfectivo } from '../../data/data';
-import { StylesMainPagos, InfoPagos, CompaniesTarjetas, CompanyEfectivo } from './StylesMainPagos';
+import { StylesMainPagos, InfoPagos, CompaniesTarjetas } from './StylesMainPagos';
 const MainPagos = () => {
     return (
         <StylesMainPagos>
