@@ -7,6 +7,11 @@ import oxxo from "../00 RECURSOS PROYECTO SPRINT 2/images/oxxo.png";
 import eleven from "../00 RECURSOS PROYECTO SPRINT 2/images/1200px-7-eleven_logo.svg.png";
 import walmart from "../00 RECURSOS PROYECTO SPRINT 2/images/walmart-logo-477.png";
 import farmaciahorro from "../00 RECURSOS PROYECTO SPRINT 2/images/farmacias-del-ahorro-logo-vector.png";
+import { IoMdCar } from 'react-icons/io';
+import { MdGroup } from 'react-icons/md';
+import { MdHotel } from 'react-icons/md';
+import { FaWallet } from 'react-icons/fa';
+
 
 export const pagosTarjetas = [
     {
@@ -57,7 +62,45 @@ export const pagosEfectivo = [
         image: farmaciahorro,
         title: "Farmacia del ahorro"
     }
-]
+];
+
+export const serviciosDisponibles = [
+    {
+        id: 1,
+        image: IoMdCar,
+        title: "Logo Car",
+        servicio: "Transporte",
+        info:"Renta un auto o reserva un shuttle"
+    },
+    {
+        id: 2,
+        image: IoMdCar,
+        title: "YaVas",
+        servicio: "Vuelos + Hoteles",
+        info:"Encuentra las mejores ofertas para tu viaje"
+    },
+    {
+        id: 3,
+        image: MdGroup,
+        title: "Logo group",
+        servicio: "Grupos",
+        info:"Obtén una cotización para grupos de mas de 9 personas"
+    },
+    {
+        id: 4,
+        image: MdHotel,
+        title: "Logo Hotel",
+        servicio: "Hotel",
+        info:"Reserva cualquier habitación en cualquier parte del mundo"
+    },
+    {
+        id: 5,
+        image: FaWallet,
+        title: "Logo Carga",
+        servicio: "Carga",
+        info:"Contamos con servicio de carga y mensajería"
+    },
+];
 
 
 

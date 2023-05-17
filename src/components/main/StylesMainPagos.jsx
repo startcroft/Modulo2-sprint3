@@ -1,6 +1,6 @@
 import { styled } from "styled-components"
 
-export const StylesMainPagos = styled.main `
+export const StylesMainPagos = styled.main`
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
     display: flex;
     flex-direction: column;
@@ -38,6 +38,33 @@ export const CompaniesTarjetas = styled.div`
             padding: 0;
             margin: 0;
             cursor: pointer;
+        }
+    }
+`;
+
+export const Divservicios = styled.div`
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin-top: 4%;
+    div{
+        display: flex;
+        width: 100%;
+        gap: 5%;
+        justify-content: space-between;
+        article{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.4% 1.5% 3.7% 1.5%;
+            width: 20%;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            border-radius: 20px;
+            p{
+                font-size: 1rem;
+                text-align: center;
+            }
         }
     }
 `;

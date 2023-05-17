@@ -1,12 +1,13 @@
 import React from 'react'
-import { pagosTarjetas, pagosEfectivo } from '../../data/data';
-import { StylesMainPagos, InfoPagos, CompaniesTarjetas } from './StylesMainPagos';
-import { HeartFill } from 'react-bootstrap-icons';
+import { pagosTarjetas, pagosEfectivo, serviciosDisponibles } from '../../data/data';
+import { StylesMainPagos, InfoPagos, CompaniesTarjetas, Divservicios } from './StylesMainPagos';
+
+
 const MainPagos = () => {
     return (
         <StylesMainPagos>
             <div>
-                <h1>Pago seguro</h1>
+                <h2>Pago seguro</h2>
                 <InfoPagos>
                     <CompaniesTarjetas>
                         <p>Tarjeta de crédito, tarjeta de débito y pago electrónico</p>
@@ -34,12 +35,35 @@ const MainPagos = () => {
                 </InfoPagos>
             </div>
 
-            <div>
-                <h1>Servicios disponibles</h1>
-                <HeartFill />
-            </div>
+            <Divservicios>
+                <h2>Servicios disponibles</h2>
+                <div >
+                    {
+                        serviciosDisponibles.map((servicio) => (
+                            <article>
+                                <figure>
+                                    <servicio.image style={{
+                                        color: "white",
+                                        backgroundColor: "9e247b",
+                                        fontSize: "40px",
+                                        padding: "20px",
+                                        borderRadius: "50%"
+
+                                    }} />
+                                </figure>
+                                <h4>
+                                    {servicio.servicio}
+                                </h4>
+                                <p>
+                                    {servicio.info}
+                                </p>
+                            </article>
+                        ))
+                    }
+                </div>
+            </Divservicios  >
         </StylesMainPagos>
     )
 }
 
-export default MainPagos
+export default MainPagos;
