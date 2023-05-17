@@ -41,7 +41,7 @@ const MainPagos = () => {
                     {
                         serviciosDisponibles.map((servicio) => (
                             <article>
-                                <figure>
+                                
                                     <servicio.image style={{
                                         color: "white",
                                         backgroundColor: "9e247b",
@@ -50,7 +50,7 @@ const MainPagos = () => {
                                         borderRadius: "50%"
 
                                     }} />
-                                </figure>
+                               
                                 <h4>
                                     {servicio.servicio}
                                 </h4>

@@ -57,7 +57,7 @@ export const Divservicios = styled.div`
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0.4% 1.5% 3.7% 1.5%;
+            padding: 2% 1.5% 3.7% 1.5%;
             width: 20%;
             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
             border-radius: 20px;
