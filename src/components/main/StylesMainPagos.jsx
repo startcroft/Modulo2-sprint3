@@ -1,4 +1,4 @@
-import { styled } from "styled-components"
+import styled from "styled-components";
 
 export const StylesMainPagos = styled.main`
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
