@@ -73,7 +73,7 @@ const Header = () => {
                             <img src={chevronDown} alt="chevronDown" />
                            
                         </button>
-                        <Modal  isOpen={isOpenModal1} closeModal={closeModal1}></Modal>
+                        {/* <Modal  isOpen={isOpenModal1} closeModal={closeModal1}></Modal> */}
 
                     </div>
 
