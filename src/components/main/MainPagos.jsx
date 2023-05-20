@@ -13,8 +13,8 @@ const MainPagos = () => {
                         <p>Tarjeta de crédito, tarjeta de débito y pago electrónico</p>
                         <div>
                             {
-                                pagosTarjetas.map((tarjeta) => (
-                                    <figure>
+                                pagosTarjetas.map((tarjeta, index) => (
+                                    <figure key={index}>
                                         <img src={tarjeta.image} alt={tarjeta.title} />
                                     </figure>))
                             }
@@ -24,8 +24,8 @@ const MainPagos = () => {
                         <p>Efectivo en cualquiera de las sucursales principales</p>
                         <div>
                             {
-                                pagosEfectivo.map((tienda) => (
-                                    <figure>
+                                pagosEfectivo.map((tienda, index) => (
+                                    <figure key={index}> {}
                                         <img src={tienda.image} alt={tienda.name} />
                                     </figure>
                                 ))
@@ -39,8 +39,8 @@ const MainPagos = () => {
                 <h2>Servicios disponibles</h2>
                 <div >
                     {
-                        serviciosDisponibles.map((servicio) => (
-                            <article>
+                        serviciosDisponibles.map((servicio, index) => (
+                            <article key={index} >
                                 
                                     <servicio.image className='icon' style={{
                                         color: "white",
