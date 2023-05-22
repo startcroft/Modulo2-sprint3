@@ -204,6 +204,40 @@ export const StyleSection = styled.header`
         
       }
     }
+
+    .modal-container{
+
+      background-color: red; 
+      color: red;
+      div{
+        .passengerType{
+          
+          display: flex;
+          flex-direction: column;
+          h2{
+              font-size: 20px;
+              margin-bottom: 1px;
+          }
+      }
+      }
+    }
   
+  }
+
+  .modal-container{
+
+    background-color: red; 
+    color: red;
+    div{
+      .passengerType{
+        
+        display: flex;
+        flex-direction: column;
+        h2{
+            font-size: 20px;
+            margin-bottom: 1px;
+        }
+    }
+    }
   }
 `;

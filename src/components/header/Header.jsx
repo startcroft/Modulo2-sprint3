@@ -10,22 +10,99 @@ import { DatePicker, Input } from "antd";
 import { getCiudades } from "../services/getCiudades";
 import { Button, Modal } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import plus from "../../00 RECURSOS PROYECTO SPRINT 2/icons/plus.svg"
+import minus from "../../00 RECURSOS PROYECTO SPRINT 2/icons/minus.svg"
 import { clear } from "@testing-library/user-event/dist/clear";
+import { red } from "@mui/material/colors";
 
 
 const Header = () => {
-  const [isOpenModal1, openModal1, closeModal1] = useModal(true);
+
   const [showCalendar, setShowCalendar] = useState(false);
   const [isSelected, setIsSelected] = useState(null);
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState({});
- 
+
+  const [isOpenModal1, setIsModalOpen1] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
+
+  const [passengersAmount, setPassengersAmount] = useState(1);
+  const [adultAmount, setAdultAmount] = useState(0);
+  const [childAmount, setChildAmount] = useState(0);
+  const [babyAmount, setBabyAmount] = useState(0);
+
+  const incrementPassengers=()=>{
+    setPassengersAmount(
+      prevAmount => prevAmount + 1
+  )
+  }
+
+  const decrementPassengers=()=>{
+    setPassengersAmount(
+      prevAmount => prevAmount - 1
+  )
+  }
+  
+    const incrementAdultAmount=()=>{
+      setAdultAmount(
+      prevAmount => prevAmount + 1
+          
+      )
+    incrementPassengers()
+    }
+
+    const decrementAdultAmount=()=>{
+      setAdultAmount(
+      prevAmount => prevAmount - 1
+          
+      )
+    decrementPassengers()
+    }
+
+    const incrementBabyAmount=()=>{
+      setBabyAmount(
+      prevAmount => prevAmount + 1
+          
+      )
+    incrementPassengers()
+    }
+
+    const decrementBabyAmount=()=>{
+      setBabyAmount(
+      prevAmount => prevAmount - 1
+          
+      )
+    decrementPassengers()
+    }
+
+    const incrementChildAmount=()=>{
+      setChildAmount(
+      prevAmount => prevAmount + 1
+          
+      )
+    incrementPassengers()
+    }
+
+    const decrementChildAmount=()=>{
+      setChildAmount(
+      prevAmount => prevAmount - 1
+          
+      )
+    decrementPassengers()
+    }
+
+
+
+
   const showModal = () => {
     setIsModalOpen(true);
     setIsModalOpen2(false);
   };
+
+  const showModal1 = () => {
+    setIsModalOpen1(true);
+  }
   const handleOk = (e) => {
     setIsModalOpen(false);
     const buttonId = Number( e.target.id);
@@ -36,6 +113,7 @@ const Header = () => {
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+    setIsModalOpen1(false);
   };
 
 
@@ -67,7 +145,21 @@ const Header = () => {
     console.log(button);
   };
 
- 
+  const customStyles = {
+    display: 'flex',
+    flexDirection: 'column'
+  };
+
+  const countButton = {
+    width: "50px",
+    height: "50px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  }
+
+
+
   return (
     <StyleSection>
       <figure className="airplane">
@@ -99,7 +191,7 @@ const Header = () => {
             {/* {
               selectedCity.map(city => (
                 <h2>
-                  {city.name} 
+                  {city.name}
                 </h2>
               ))
             } */}
@@ -114,7 +206,7 @@ const Header = () => {
                 <table style={{ borderCollapse: "collapse", width: '100%' }}>
                   <tr>
                     <th style={{ border: "1px solid grey", padding: "8px" }}>
-                      <button id={item.id} onClick={handleOk} 
+                      <button id={item.id} onClick={handleOk}
                         style={{
                           width: '100%',
                           display: 'flex',
@@ -133,7 +225,7 @@ const Header = () => {
               ))
             }
           </Modal>
-          
+
           <Button type="" onClick={showModal} className="destinyButton">
             <h2>---</h2>
             <span>Seleccione un destino</span>
@@ -200,20 +292,76 @@ const Header = () => {
         </div>
 
         <div className="pasajeros">
-          <button className="passengers" onClick={openModal1}>
+          <button className="passengers" onClick={showModal1}>
             <div>
               <span>Pasajeros</span>
-              <h4>1 adulto</h4>
+              <h4> {passengersAmount} pasajeros</h4>
             </div>
             <img src={chevronDown} alt="chevronDown" />
           </button>
+        {/* // Aquí está el nuevo modal */}
+          <Modal className="modal-container" style={customStyles} open={isOpenModal1} onOk={handleCancel} onCancel={handleCancel}>
+
+                <div style={{display: "flex", justifyContent: 'space-evenly'}}>
+                    <div className="passengerType">
+                        <h2>Adultos</h2>
+                        <h3>(13 + años)</h3>
+                    </div>
+
+                    <div style={{display: "flex", alignSelf: "center"}}>
+                        <button style={countButton} onClick={incrementAdultAmount}>
+                            <img src={plus} alt="plus" />
+                        </button>
+                        <h2 style={{margin: "15px"}}>{adultAmount}</h2>
+                        <button style={countButton} onClick={decrementAdultAmount}>
+                            <img src={minus} alt="minus" />
+                        </button>
+                    </div>
+
+                </div>
+
+                <div style={{display: "flex", justifyContent: 'space-evenly'}}>
+                    <div className="passengerType">
+                        <h2>Niños</h2>
+                        <h3>(2 a 12 años)</h3>
+                    </div>
+
+                    <div style={{display: "flex", alignSelf: "center"}}>
+                        <button style={countButton} onClick={incrementChildAmount}>
+                            <img src={plus} alt="plus" />
+                        </button>
+                        <h2 style={{margin: "15px"}}>{childAmount}</h2>
+                        <button style={countButton} onClick={decrementChildAmount}>
+                            <img src={minus} alt="minus" />
+                        </button>
+                    </div>
+
+                </div>
+
+                <div style={{display: "flex", justifyContent: 'space-evenly'}}>
+                    <div className="passengerType">
+                        <h2>Bebés</h2>
+                        <h3>(0 a 2 años)</h3>
+                    </div>
+
+                    <div style={{display: "flex", alignSelf: "center"}}>
+                        <button style={countButton} onClick={incrementBabyAmount}>
+                            <img src={plus} alt="plus" />
+                        </button>
+                        <h2 style={{margin: "15px"}}>{babyAmount}</h2>
+                        <button style={countButton} onClick={decrementBabyAmount}>
+                            <img src={minus} alt="minus" />
+                        </button>
+                    </div>
+
+                </div>
+            </Modal>
           <button className="passengers">
             <div>
               <span>Tienes un código de promoción</span>
               <h4>-- -- -- --</h4>
             </div>
           </button>
-          {/* <Modal  isOpen={isOpenModal1} closeModal={closeModal1}></Modal> */}
         </div>
 
         <button className="submitButton">
@@ -223,6 +371,6 @@ const Header = () => {
       </form>
     </StyleSection>
   );
-};
+ };
 
 export default Header;
