@@ -70,7 +70,7 @@ export const StyleSection = styled.header`
       
     }
 
-    .submitButton {
+    /* .submitButton {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -93,7 +93,7 @@ export const StyleSection = styled.header`
         width: 30px;
         margin-right: 10px;
       }
-    }
+    } */
     .destinos {
       display: flex;
       width: 100%;

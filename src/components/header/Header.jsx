@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import airplane from "../../00 RECURSOS PROYECTO SPRINT 2/avion.jpg";
 import calendar from "../../00 RECURSOS PROYECTO SPRINT 2/icons/calendar.svg";
-import plane from "../../00 RECURSOS PROYECTO SPRINT 2/icons/plane.svg";
 import chevronDown from "../../00 RECURSOS PROYECTO SPRINT 2/icons/chevron-down.svg";
 import { StyleSection } from "./StyleHeader";
 // import Modal from "../header/passengersModal/PassengersModal";
-import { useModal } from "./useModal";
 import { DatePicker, Input } from "antd";
 import { getCiudades } from "../services/getCiudades";
 import { Button, Modal } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import plus from "../../00 RECURSOS PROYECTO SPRINT 2/icons/plus.svg"
 import minus from "../../00 RECURSOS PROYECTO SPRINT 2/icons/minus.svg"
-import { clear } from "@testing-library/user-event/dist/clear";
-import { red } from "@mui/material/colors";
+// import { clear } from "@testing-library/user-event/dist/clear";
+// import { red } from "@mui/material/colors";
+import BuscarVuelo from "./BtnBuscarVuelo/BuscarVuelo";
 
 
 const Header = () => {
@@ -363,11 +362,12 @@ const Header = () => {
             </div>
           </button>
         </div>
-
-        <button className="submitButton">
+        
+        {/* <button className="submitButton">
           <img src={plane} alt="plane" />
           <h3>Buscar vuelos</h3>
-        </button>
+        </button> */}
+        <BuscarVuelo/>
       </form>
     </StyleSection>
   );
