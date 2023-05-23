@@ -17,7 +17,10 @@ import BuscarVuelo from "./BtnBuscarVuelo/BuscarVuelo";
 
 const Header = () => {
 
-  const [showCalendar, setShowCalendar] = useState(false);
+  const [showCalendar, setShowCalendar] = useState({
+    salida: false,
+    regreso:false
+  });
   const [isSelected, setIsSelected] = useState(null);
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState({});
@@ -102,13 +105,13 @@ const Header = () => {
   const showModal1 = () => {
     setIsModalOpen1(true);
   }
-  const handleOk = (e) => {
+  const handleOk = () => {
     setIsModalOpen(false);
-    const buttonId = Number( e.target.id);
-    console.log('se dio click a', buttonId );
-    const city = cities.find((city) => city.id === buttonId);
-    console.log(city);
-    setSelectedCity(city);
+    // const buttonId = Number( e.target.id);
+    // console.log('se dio click a', buttonId );
+    // const city = cities.find((city) => city.id === buttonId);
+    // console.log(city);
+    // setSelectedCity(city);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -171,15 +174,17 @@ const Header = () => {
         <p>Descubre vuelos al mejor precio y perfectos para cualquier viaje</p>
         <div className="tipoViaje">
           <button
-            className={`travelType ${isSelected === "button1" ? "selected" : ""
-              }`}
+            className={`travelType ${
+              isSelected === "button1" ? "selected" : ""
+            }`}
             onClick={() => handleClickBtnSelected("button1")}
           >
             Viaje redondo
           </button>
           <button
-            className={`travelType ${isSelected === "button2" ? "selected" : ""
-              }`}
+            className={`travelType ${
+              isSelected === "button2" ? "selected" : ""
+            }`}
             onClick={() => handleClickBtnSelected("button2")}
           >
             Viaje sencillo
@@ -194,77 +199,106 @@ const Header = () => {
                 </h2>
               ))
             } */}
-            <h2>Ciudad de Mexico</h2>
+            <h2>
+              {selectedCity.name ? selectedCity.name : "Ciudad de México"}
+            </h2>
             <span>Origen</span>
           </Button>
-          <Modal style={{ width: '100px' }} title="¿A donde viajas?" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-            <Input addonBefore={<SearchOutlined style={{ background: '#fff' }} />} placeholder="Medellin" />
-            {
-
-              cities.map((item, index) => (
-                <table style={{ borderCollapse: "collapse", width: '100%' }}>
-                  <tr>
-                    <th style={{ border: "1px solid grey", padding: "8px" }}>
-                      <button id={item.id} onClick={handleOk}
-                        style={{
-                          width: '100%',
-                          display: 'flex',
-                          border: 0,
-                          background: "transparent",
-                          justifyContent: "flex-start",
-                          margin: 0,
-                          cursor: 'pointer',
-                        }}
-                      >
-                        <h3 style={{ margin: "2%" }}>{item.name}</h3>
-                      </button>
-                    </th>
-                  </tr>
-                </table>
-              ))
-            }
+          <Modal
+            style={{ width: "100px" }}
+            title="¿A donde viajas?"
+            open={isModalOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <Input
+              addonBefore={<SearchOutlined style={{ background: "#fff" }} />}
+              placeholder="Medellin"
+            />
+            {cities.map((item, index) => (
+              <table style={{ borderCollapse: "collapse", width: "100%" }}>
+                <tr>
+                  <th style={{ border: "1px solid grey", padding: "8px" }}>
+                    <button
+                      id={item.id}
+                      onClick={() => {
+                        console.log(item);
+                        setSelectedCity(item);
+                        setIsModalOpen(false);
+                      }}
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        border: 0,
+                        background: "transparent",
+                        justifyContent: "flex-start",
+                        margin: 0,
+                        cursor: "pointer",
+                      }}
+                    >
+                      <h3 style={{ margin: "2%" }}>{item.name}</h3>
+                    </button>
+                  </th>
+                </tr>
+              </table>
+            ))}
           </Modal>
 
           <Button type="" onClick={showModal} className="destinyButton">
             <h2>---</h2>
             <span>Seleccione un destino</span>
           </Button>
-          <Modal style={{ width: '100px' }} title="¿A donde viajas?" open={isModalOpen2} onOk={handleOk} onCancel={handleCancel}>
-            <Input addonBefore={<SearchOutlined style={{ background: '#fff' }} />} placeholder="Medellin" />
-            {
-
-              cities.map((item, index) => (
-                <table style={{ borderCollapse: "collapse", width: '100%' }}>
-                  <tr>
-                    <th style={{ border: "1px solid grey", padding: "8px" }}>
-                      <button id={item.id} Click={handleOk}
-                        style={{
-                          width: '100%',
-                          display: 'flex',
-                          border: 0,
-                          background: "transparent",
-                          justifyContent: "flex-start",
-                          margin: 0,
-                          cursor: 'pointer',
-                        }}
-                      >
-                        <h3 style={{ margin: "2%" }}>{item.name}</h3>
-                      </button>
-                    </th>
-                  </tr>
-                </table>
-              ))
-            }
+          <Modal
+            style={{ width: "100px" }}
+            title="¿A donde viajas?"
+            open={isModalOpen2}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <Input
+              addonBefore={<SearchOutlined style={{ background: "#fff" }} />}
+              placeholder="Medellin"
+            />
+            {cities.map((item, index) => (
+              <table style={{ borderCollapse: "collapse", width: "100%" }}>
+                <tr>
+                  <th style={{ border: "1px solid grey", padding: "8px" }}>
+                    <button
+                      id={item.id}
+                      Click={handleOk}
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        border: 0,
+                        background: "transparent",
+                        justifyContent: "flex-start",
+                        margin: 0,
+                        cursor: "pointer",
+                      }}
+                    >
+                      <h3 style={{ margin: "2%" }}>{item.name}</h3>
+                    </button>
+                  </th>
+                </tr>
+              </table>
+            ))}
           </Modal>
-
         </div>
         <div className="calendarios">
-          <button className="calendar" onClick={handleClick}>
+          <button
+            className="calendar"
+            onClick={() => {
+              setShowCalendar({
+                ...showCalendar,
+                salida: true,
+              });
+            }}
+          >
             <img src={calendar} alt="calendar" />
             <div>
               <span>Salida</span>
               <h4>Mar, 30 nov, 2021</h4>
-              {showCalendar && (
+              {showCalendar.salida && (
                 <div>
                   <DatePicker renderExtraFooter={() => "$ Precios mas bajos"} />
                 </div>
@@ -274,14 +308,19 @@ const Header = () => {
 
           <button
             className="calendar"
-            onClick={handleClick}
+            onClick={() => {
+              setShowCalendar({
+                ...showCalendar,
+                regreso: true,
+              });
+            }}
             disabled={isSelected === "button2"}
           >
             <img src={calendar} alt="calendar" />
             <div>
               <span>Regreso</span>
               <h4>Mié, 8 dic, 2021</h4>
-              {showCalendar && (
+              {showCalendar.regreso && (
                 <div>
                   <DatePicker renderExtraFooter={() => "$ Precios mas bajos"} />
                 </div>
@@ -298,63 +337,65 @@ const Header = () => {
             </div>
             <img src={chevronDown} alt="chevronDown" />
           </button>
-        {/* // Aquí está el nuevo modal */}
-          <Modal className="modal-container" style={customStyles} open={isOpenModal1} onOk={handleCancel} onCancel={handleCancel}>
+          {/* // Aquí está el nuevo modal */}
+          <Modal
+            className="modal-container"
+            style={customStyles}
+            open={isOpenModal1}
+            onOk={handleCancel}
+            onCancel={handleCancel}
+          >
+            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+              <div className="passengerType">
+                <h2>Adultos</h2>
+                <h3>(13 + años)</h3>
+              </div>
 
-                <div style={{display: "flex", justifyContent: 'space-evenly'}}>
-                    <div className="passengerType">
-                        <h2>Adultos</h2>
-                        <h3>(13 + años)</h3>
-                    </div>
+              <div style={{ display: "flex", alignSelf: "center" }}>
+                <button style={countButton} onClick={incrementAdultAmount}>
+                  <img src={plus} alt="plus" />
+                </button>
+                <h2 style={{ margin: "15px" }}>{adultAmount}</h2>
+                <button style={countButton} onClick={decrementAdultAmount}>
+                  <img src={minus} alt="minus" />
+                </button>
+              </div>
+            </div>
 
-                    <div style={{display: "flex", alignSelf: "center"}}>
-                        <button style={countButton} onClick={incrementAdultAmount}>
-                            <img src={plus} alt="plus" />
-                        </button>
-                        <h2 style={{margin: "15px"}}>{adultAmount}</h2>
-                        <button style={countButton} onClick={decrementAdultAmount}>
-                            <img src={minus} alt="minus" />
-                        </button>
-                    </div>
+            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+              <div className="passengerType">
+                <h2>Niños</h2>
+                <h3>(2 a 12 años)</h3>
+              </div>
 
-                </div>
+              <div style={{ display: "flex", alignSelf: "center" }}>
+                <button style={countButton} onClick={incrementChildAmount}>
+                  <img src={plus} alt="plus" />
+                </button>
+                <h2 style={{ margin: "15px" }}>{childAmount}</h2>
+                <button style={countButton} onClick={decrementChildAmount}>
+                  <img src={minus} alt="minus" />
+                </button>
+              </div>
+            </div>
 
-                <div style={{display: "flex", justifyContent: 'space-evenly'}}>
-                    <div className="passengerType">
-                        <h2>Niños</h2>
-                        <h3>(2 a 12 años)</h3>
-                    </div>
+            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+              <div className="passengerType">
+                <h2>Bebés</h2>
+                <h3>(0 a 2 años)</h3>
+              </div>
 
-                    <div style={{display: "flex", alignSelf: "center"}}>
-                        <button style={countButton} onClick={incrementChildAmount}>
-                            <img src={plus} alt="plus" />
-                        </button>
-                        <h2 style={{margin: "15px"}}>{childAmount}</h2>
-                        <button style={countButton} onClick={decrementChildAmount}>
-                            <img src={minus} alt="minus" />
-                        </button>
-                    </div>
-
-                </div>
-
-                <div style={{display: "flex", justifyContent: 'space-evenly'}}>
-                    <div className="passengerType">
-                        <h2>Bebés</h2>
-                        <h3>(0 a 2 años)</h3>
-                    </div>
-
-                    <div style={{display: "flex", alignSelf: "center"}}>
-                        <button style={countButton} onClick={incrementBabyAmount}>
-                            <img src={plus} alt="plus" />
-                        </button>
-                        <h2 style={{margin: "15px"}}>{babyAmount}</h2>
-                        <button style={countButton} onClick={decrementBabyAmount}>
-                            <img src={minus} alt="minus" />
-                        </button>
-                    </div>
-
-                </div>
-            </Modal>
+              <div style={{ display: "flex", alignSelf: "center" }}>
+                <button style={countButton} onClick={incrementBabyAmount}>
+                  <img src={plus} alt="plus" />
+                </button>
+                <h2 style={{ margin: "15px" }}>{babyAmount}</h2>
+                <button style={countButton} onClick={decrementBabyAmount}>
+                  <img src={minus} alt="minus" />
+                </button>
+              </div>
+            </div>
+          </Modal>
           <button className="passengers">
             <div>
               <span>Tienes un código de promoción</span>
@@ -362,12 +403,12 @@ const Header = () => {
             </div>
           </button>
         </div>
-        
+
         {/* <button className="submitButton">
           <img src={plane} alt="plane" />
           <h3>Buscar vuelos</h3>
         </button> */}
-        <BuscarVuelo/>
+        <BuscarVuelo />
       </form>
     </StyleSection>
   );
