@@ -195,7 +195,7 @@ const Header = () => {
                 </h2>
               ))
             } */}
-            <h2>Ciudad de mexico</h2>
+            <h2>Ciudad de Mexico</h2>
             <span>Origen</span>
           </Button>
           <Modal style={{ width: '100px' }} title="¿A donde viajas?" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
@@ -238,7 +238,7 @@ const Header = () => {
                 <table style={{ borderCollapse: "collapse", width: '100%' }}>
                   <tr>
                     <th style={{ border: "1px solid grey", padding: "8px" }}>
-                      <button onClick={handleOk}
+                      <button id={item.id} Click={handleOk}
                         style={{
                           width: '100%',
                           display: 'flex',
