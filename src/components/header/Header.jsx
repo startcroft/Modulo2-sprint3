@@ -19,7 +19,7 @@ const Header = () => {
 
   const [showCalendar, setShowCalendar] = useState({
     salida: false,
-    regreso:false
+    regreso: false
   });
   const [isSelected, setIsSelected] = useState(null);
   const [cities, setCities] = useState([]);
@@ -34,65 +34,65 @@ const Header = () => {
   const [childAmount, setChildAmount] = useState(0);
   const [babyAmount, setBabyAmount] = useState(0);
 
-  const incrementPassengers=()=>{
+  const incrementPassengers = () => {
     setPassengersAmount(
       prevAmount => prevAmount + 1
-  )
+    )
   }
 
-  const decrementPassengers=()=>{
+  const decrementPassengers = () => {
     setPassengersAmount(
       prevAmount => prevAmount - 1
-  )
+    )
   }
-  
-    const incrementAdultAmount=()=>{
-      setAdultAmount(
+
+  const incrementAdultAmount = () => {
+    setAdultAmount(
       prevAmount => prevAmount + 1
-          
-      )
+
+    )
     incrementPassengers()
-    }
+  }
 
-    const decrementAdultAmount=()=>{
-      setAdultAmount(
+  const decrementAdultAmount = () => {
+    setAdultAmount(
       prevAmount => prevAmount - 1
-          
-      )
-    decrementPassengers()
-    }
 
-    const incrementBabyAmount=()=>{
-      setBabyAmount(
+    )
+    decrementPassengers()
+  }
+
+  const incrementBabyAmount = () => {
+    setBabyAmount(
       prevAmount => prevAmount + 1
-          
-      )
+
+    )
     incrementPassengers()
-    }
+  }
 
-    const decrementBabyAmount=()=>{
-      setBabyAmount(
+  const decrementBabyAmount = () => {
+    setBabyAmount(
       prevAmount => prevAmount - 1
-          
-      )
-    decrementPassengers()
-    }
 
-    const incrementChildAmount=()=>{
-      setChildAmount(
+    )
+    decrementPassengers()
+  }
+
+  const incrementChildAmount = () => {
+    setChildAmount(
       prevAmount => prevAmount + 1
-          
-      )
-    incrementPassengers()
-    }
 
-    const decrementChildAmount=()=>{
-      setChildAmount(
+    )
+    incrementPassengers()
+  }
+
+  const decrementChildAmount = () => {
+    setChildAmount(
       prevAmount => prevAmount - 1
-          
-      )
+
+    )
     decrementPassengers()
-    }
+  }
 
 
 
@@ -174,17 +174,15 @@ const Header = () => {
         <p>Descubre vuelos al mejor precio y perfectos para cualquier viaje</p>
         <div className="tipoViaje">
           <button
-            className={`travelType ${
-              isSelected === "button1" ? "selected" : ""
-            }`}
+            className={`travelType ${isSelected === "button1" ? "selected" : ""
+              }`}
             onClick={() => handleClickBtnSelected("button1")}
           >
             Viaje redondo
           </button>
           <button
-            className={`travelType ${
-              isSelected === "button2" ? "selected" : ""
-            }`}
+            className={`travelType ${isSelected === "button2" ? "selected" : ""
+              }`}
             onClick={() => handleClickBtnSelected("button2")}
           >
             Viaje sencillo
@@ -192,20 +190,14 @@ const Header = () => {
         </div>
         <div className="destinos">
           <Button type="" onClick={showModal} className="destinyButton">
-            {/* {
-              selectedCity.map(city => (
-                <h2>
-                  {city.name}
-                </h2>
-              ))
-            } */}
+
             <h2>
               {selectedCity.name ? selectedCity.name : "Ciudad de México"}
             </h2>
             <span>Origen</span>
           </Button>
           <Modal
-            style={{ width: "100px" }}
+
             title="¿A donde viajas?"
             open={isModalOpen}
             onOk={handleOk}
@@ -412,6 +404,6 @@ const Header = () => {
       </form>
     </StyleSection>
   );
- };
+};
 
 export default Header;
