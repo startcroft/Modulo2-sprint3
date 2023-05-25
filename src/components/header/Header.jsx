@@ -19,7 +19,7 @@ const Header = () => {
 
   const [showCalendar, setShowCalendar] = useState({
     salida: false,
-    regreso:false
+    regreso: false
   });
   const [isSelected, setIsSelected] = useState(null);
   const [cities, setCities] = useState([]);
@@ -30,69 +30,92 @@ const Header = () => {
   const [isModalOpen2, setIsModalOpen2] = useState(false);
 
   const [passengersAmount, setPassengersAmount] = useState(1);
-  const [adultAmount, setAdultAmount] = useState(0);
+  const [adultAmount, setAdultAmount] = useState(1);
   const [childAmount, setChildAmount] = useState(0);
   const [babyAmount, setBabyAmount] = useState(0);
 
-  const incrementPassengers=()=>{
+  const incrementPassengers = () => {
     setPassengersAmount(
       prevAmount => prevAmount + 1
-  )
+    )
   }
 
-  const decrementPassengers=()=>{
-    setPassengersAmount(
-      prevAmount => prevAmount - 1
-  )
+  const decrementPassengers = () => {
+    if (passengersAmount === 0) {
+      alert("No se pueden ingresar valores negativos");
+    } else {
+      setPassengersAmount(
+        prevAmount => prevAmount - 1
+      )
+    }
+
   }
-  
-    const incrementAdultAmount=()=>{
+
+  const incrementAdultAmount = () => {
+    setAdultAmount(
+      prevAmount => prevAmount + 1
+
+    )
+    incrementPassengers()
+  }
+
+  const decrementAdultAmount = () => {
+
+    if (adultAmount === 0) {
+      alert("No se pueden ingresar valores negativos");
+    } else {
       setAdultAmount(
+        prevAmount => prevAmount - 1
+      )
+      decrementPassengers()
+    }
+
+  }
+
+  const incrementBabyAmount = () => {
+    setBabyAmount(
       prevAmount => prevAmount + 1
-          
-      )
+
+    )
     incrementPassengers()
-    }
+  }
 
-    const decrementAdultAmount=()=>{
-      setAdultAmount(
-      prevAmount => prevAmount - 1
-          
-      )
-    decrementPassengers()
-    }
+  const decrementBabyAmount = () => {
 
-    const incrementBabyAmount=()=>{
+    if (babyAmount === 0) {
+      alert("No se pueden ingresar valores negativos");
+    } else {
       setBabyAmount(
+        prevAmount => prevAmount - 1
+
+      )
+      decrementPassengers()
+    }
+
+  }
+
+  const incrementChildAmount = () => {
+    setChildAmount(
       prevAmount => prevAmount + 1
-          
-      )
+
+    )
     incrementPassengers()
-    }
+  }
 
-    const decrementBabyAmount=()=>{
-      setBabyAmount(
-      prevAmount => prevAmount - 1
-          
-      )
-    decrementPassengers()
-    }
+  const decrementChildAmount = () => {
 
-    const incrementChildAmount=()=>{
+    if (childAmount === 0) {
+      alert("No se pueden ingresar valores negativos");
+    } else {
       setChildAmount(
-      prevAmount => prevAmount + 1
-          
+        prevAmount => prevAmount - 1
       )
-    incrementPassengers()
+      decrementPassengers()
     }
 
-    const decrementChildAmount=()=>{
-      setChildAmount(
-      prevAmount => prevAmount - 1
-          
-      )
-    decrementPassengers()
-    }
+
+
+  }
 
 
 
@@ -174,17 +197,15 @@ const Header = () => {
         <p>Descubre vuelos al mejor precio y perfectos para cualquier viaje</p>
         <div className="tipoViaje">
           <button
-            className={`travelType ${
-              isSelected === "button1" ? "selected" : ""
-            }`}
+            className={`travelType ${isSelected === "button1" ? "selected" : ""
+              }`}
             onClick={() => handleClickBtnSelected("button1")}
           >
             Viaje redondo
           </button>
           <button
-            className={`travelType ${
-              isSelected === "button2" ? "selected" : ""
-            }`}
+            className={`travelType ${isSelected === "button2" ? "selected" : ""
+              }`}
             onClick={() => handleClickBtnSelected("button2")}
           >
             Viaje sencillo
@@ -412,6 +433,6 @@ const Header = () => {
       </form>
     </StyleSection>
   );
- };
+};
 
 export default Header;
