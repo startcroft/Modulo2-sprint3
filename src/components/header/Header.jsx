@@ -3,25 +3,38 @@ import airplane from "../../00 RECURSOS PROYECTO SPRINT 2/avion.jpg";
 import calendar from "../../00 RECURSOS PROYECTO SPRINT 2/icons/calendar.svg";
 import chevronDown from "../../00 RECURSOS PROYECTO SPRINT 2/icons/chevron-down.svg";
 import { StyleSection } from "./StyleHeader";
-// import Modal from "../header/passengersModal/PassengersModal";
 import { DatePicker, Input } from "antd";
 import { getCiudades } from "../services/getCiudades";
 import { Button, Modal } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import plus from "../../00 RECURSOS PROYECTO SPRINT 2/icons/plus.svg"
 import minus from "../../00 RECURSOS PROYECTO SPRINT 2/icons/minus.svg"
-// import { clear } from "@testing-library/user-event/dist/clear";
-// import { red } from "@mui/material/colors";
 import BuscarVuelo from "./BtnBuscarVuelo/BuscarVuelo";
-
+import moment from 'moment';
+import { clear } from "@testing-library/user-event/dist/clear";
 
 const Header = () => {
+  const dateFormat = 'ddd, D MMM, YYYY'; // Formato personalizado
+
+  const renderExtraFooter = () => {
+    const currentDate = moment().format(dateFormat); // Obtener la fecha actual formateada
+    return <span>{currentDate}</span>; // Mostrar la fecha en el componente
+  };
+
+  const handleChange = (date) => {
+    if (date) {
+      const formattedDate = date.format(dateFormat);
+      console.log('Fecha seleccionada:', formattedDate);
+    } else {
+      console.log('Fecha deseleccionada');
+    }
+  };
 
   const [showCalendar, setShowCalendar] = useState({
     salida: false,
     regreso: false
   });
-  const [isSelected, setIsSelected] = useState(null);
+  const [isSelected, setIsSelected] = useState('button1');
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState({});
   const [selectedDestiny, setSelectedDestiny] = useState({});
@@ -30,10 +43,18 @@ const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
 
-  const [passengersAmount, setPassengersAmount] = useState(1);
+  const [passengersAmount, setPassengersAmount] = useState(0);
   const [adultAmount, setAdultAmount] = useState(1);
   const [childAmount, setChildAmount] = useState(0);
   const [babyAmount, setBabyAmount] = useState(0);
+
+  const validarCampos = () => {
+      if(!selectedCity || !selectedDestiny || showCalendar.salida || showCalendar.regreso || !passengersAmount){
+        return true;
+      }else{
+        return false;
+      }
+  }
 
   const incrementPassengers = () => {
     setPassengersAmount(
@@ -118,9 +139,6 @@ const Header = () => {
 
   }
 
-
-
-
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -134,11 +152,7 @@ const Header = () => {
   }
   const handleOk = () => {
     setIsModalOpen(false);
-    // const buttonId = Number( e.target.id);
-    // console.log('se dio click a', buttonId );
-    // const city = cities.find((city) => city.id === buttonId);
-    // console.log(city);
-    // setSelectedCity(city);
+
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -181,11 +195,15 @@ const Header = () => {
   };
 
   const countButton = {
-    width: "50px",
-    height: "50px",
+    width: "40px",
+    height: "40px",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    background: 'transparent',
+    border: 'none',
+    cursor: 'pointer'
+
   }
 
 
@@ -218,19 +236,21 @@ const Header = () => {
           </button>
         </div>
         <div className="destinos">
-          <Button type="" onClick={showModal} className="destinyButton">
-            {/* {
-              selectedCity.map(city => (
-                <h2>
-                  {city.name}
-                </h2>
-              ))
-            } */}
+          <Button type="input" onClick={showModal} className="destinyButton" >
+
             <h2>
               {selectedCity.name ? selectedCity.name : "Ciudad de México"}
             </h2>
             <span>Origen</span>
+            {
+              selectedCity.name == null && <div style={
+                {
+                  color: '#f05b5b'
+                }
+              }>Complete este campo</div>
+            }
           </Button>
+
           <Modal
             style={{ width: "100px" }}
             title="¿A donde viajas?"
@@ -263,7 +283,10 @@ const Header = () => {
                         cursor: "pointer",
                       }}
                     >
-                      <h3 style={{ margin: "2%" }}>{item.name}</h3>
+                      <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <h3 style={{ margin: "2%" }}>{item.name}</h3>
+                        <p style={{ margin: 0, padding: 0 }}>{item.aeropuerto}</p>
+                      </div>
                     </button>
                   </th>
                 </tr>
@@ -271,9 +294,16 @@ const Header = () => {
             ))}
           </Modal>
 
-          <Button type="" onClick={showModal2} className="destinyButton" disabled={isSelected === "button2"}>
+          <Button type="" onClick={showModal2} className="destinyButton" >
             <h2>{selectedDestiny.name ? selectedDestiny.name : "---"}</h2>
             <span>Seleccione un destino</span>
+            {
+              selectedDestiny.name == null && <div style={
+                {
+                  color: '#f05b5b'
+                }
+              }>Complete este campo</div>
+            }
           </Button>
           <Modal
             style={{ width: "100px" }}
@@ -307,7 +337,11 @@ const Header = () => {
                         cursor: "pointer",
                       }}
                     >
-                      <h3 style={{ margin: "2%" }}>{item.name}</h3>
+                      <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <h3 style={{ margin: "2%" }}>{item.name}</h3>
+                        <p style={{ margin: 0, padding: 0 }}>{item.aeropuerto}</p>
+                      </div>
+
                     </button>
                   </th>
                 </tr>
@@ -328,12 +362,21 @@ const Header = () => {
             <img src={calendar} alt="calendar" />
             <div>
               <span>Salida</span>
-              <h4>Mar, 30 nov, 2021</h4>
+              <h4> {showCalendar.salida ? !showCalendar.salida : 'Mar, 30 nov, 2023'}</h4>
               {showCalendar.salida && (
                 <div>
-                  <DatePicker renderExtraFooter={() => "$ Precios mas bajos"} />
+                  <DatePicker format='ddd, D MMM, YYYY' renderExtraFooter={() => "$ Precios mas bajos"} />
+
                 </div>
               )}
+              {
+                !showCalendar.salida && <div style={
+                  {
+                    color: '#f05b5b',
+                    width: '100%'
+                  }
+                }>Seleccione una fecha</div>
+              }
             </div>
           </button>
 
@@ -350,25 +393,43 @@ const Header = () => {
             <img src={calendar} alt="calendar" />
             <div>
               <span>Regreso</span>
-              <h4>Mié, 8 dic, 2021</h4>
+              <h4>  {showCalendar.regreso ? !showCalendar.regreso : 'Mié, 8 dic, 2021'}</h4>
               {showCalendar.regreso && (
                 <div>
-                  <DatePicker renderExtraFooter={() => "$ Precios mas bajos"} />
+                  <DatePicker format='ddd, D MMM, YYYY' renderExtraFooter={() => "$ Precios mas bajos"} />
                 </div>
               )}
+              {
+                !showCalendar.regreso && <div style={
+                  {
+                    color: '#f05b5b',
+                    width: '100%'
+                  }
+                }>Seleccione una fecha</div>
+              }
             </div>
           </button>
         </div>
 
         <div className="pasajeros">
           <button className="passengers" onClick={showModal1}>
-            <div>
-              <span>Pasajeros</span>
-              <h4> {passengersAmount} pasajeros</h4>
+            <div style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+              <div>
+                <span>Pasajeros</span>
+                <h4> {passengersAmount} pasajeros</h4>
+              </div>
+              <img src={chevronDown} alt="chevronDown" />
             </div>
-            <img src={chevronDown} alt="chevronDown" />
+            {
+              passengersAmount === 0 && <div style={
+                {
+                  color: '#f05b5b'
+                }
+              }>Complete este campo</div>
+            }
           </button>
-         
+
+
           <Modal
             className="modal-container"
             style={customStyles}
@@ -376,53 +437,59 @@ const Header = () => {
             onOk={handleCancel}
             onCancel={handleCancel}
           >
-            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: 'center' }}>
               <div className="passengerType">
                 <h2>Adultos</h2>
-                <h3>(13 + años)</h3>
+                <h4>(13 + años)</h4>
               </div>
 
-              <div style={{ display: "flex", alignSelf: "center" }}>
-                <button style={countButton} onClick={incrementAdultAmount}>
-                  <img src={plus} alt="plus" />
+              <div style={{ display: "flex", alignItems: "center", border: '1px solid gray', padding: '0px', height: '2.51rem', gap: '7px', borderRadius: '15px' }}>
+                <button className="contadorBotones" style={countButton} onClick={decrementAdultAmount}>
+                  <img src={minus} alt="plus" />
                 </button>
+                <p style={{ fontSize: '25px', fontWeight: 'lighter' }}>|</p>
                 <h2 style={{ margin: "15px" }}>{adultAmount}</h2>
-                <button style={countButton} onClick={decrementAdultAmount}>
-                  <img src={minus} alt="minus" />
+                <p style={{ fontSize: '25px', fontWeight: 'lighter' }}>|</p>
+                <button className="contadorBotones" style={countButton} onClick={incrementAdultAmount}>
+                  <img src={plus} alt="minus" />
                 </button>
               </div>
             </div>
 
-            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: 'center' }}>
               <div className="passengerType">
                 <h2>Niños</h2>
-                <h3>(2 a 12 años)</h3>
+                <h4>(2 a 12 años)</h4>
               </div>
 
-              <div style={{ display: "flex", alignSelf: "center" }}>
-                <button style={countButton} onClick={incrementChildAmount}>
-                  <img src={plus} alt="plus" />
+              <div style={{ display: "flex", alignItems: "center", border: '1px solid gray', padding: '0px', height: '2.51rem', gap: '7px', borderRadius: '15px' }}>
+                <button className="contadorBotones" style={countButton} onClick={decrementChildAmount}>
+                  <img src={minus} alt="plus" />
                 </button>
+                <p style={{ fontSize: '25px', fontWeight: 'lighter' }}>|</p>
                 <h2 style={{ margin: "15px" }}>{childAmount}</h2>
-                <button style={countButton} onClick={decrementChildAmount}>
-                  <img src={minus} alt="minus" />
+                <p style={{ fontSize: '25px', fontWeight: 'lighter' }}>|</p>
+                <button className="contadorBotones" style={countButton} onClick={incrementChildAmount}>
+                  <img src={plus} alt="minus" />
                 </button>
               </div>
             </div>
 
-            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: 'center' }}>
               <div className="passengerType">
                 <h2>Bebés</h2>
-                <h3>(0 a 2 años)</h3>
+                <h4>(0 a 23 años)</h4>
               </div>
 
-              <div style={{ display: "flex", alignSelf: "center" }}>
-                <button style={countButton} onClick={incrementBabyAmount}>
-                  <img src={plus} alt="plus" />
+              <div style={{ display: "flex", alignItems: "center", border: '1px solid gray', padding: '0px', height: '2.51rem', gap: '7px', borderRadius: '15px' }}>
+                <button className="contadorBotones" style={countButton} onClick={decrementBabyAmount}>
+                  <img src={minus} alt="plus" />
                 </button>
+                <p style={{ fontSize: '25px', fontWeight: 'lighter' }}>|</p>
                 <h2 style={{ margin: "15px" }}>{babyAmount}</h2>
-                <button style={countButton} onClick={decrementBabyAmount}>
-                  <img src={minus} alt="minus" />
+                <p style={{ fontSize: '25px', fontWeight: 'lighter' }}>|</p>
+                <button className="contadorBotones" style={countButton} onClick={incrementBabyAmount}>
+                  <img src={plus} alt="minus" />
                 </button>
               </div>
             </div>
@@ -434,12 +501,7 @@ const Header = () => {
             </div>
           </button>
         </div>
-
-        {/* <button className="submitButton">
-          <img src={plane} alt="plane" />
-          <h3>Buscar vuelos</h3>
-        </button> */}
-        <BuscarVuelo />
+        <BuscarVuelo validarCampos={validarCampos} />
       </form>
     </StyleSection>
   );
