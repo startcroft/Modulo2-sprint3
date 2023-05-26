@@ -10,25 +10,11 @@ import { SearchOutlined } from '@ant-design/icons';
 import plus from "../../00 RECURSOS PROYECTO SPRINT 2/icons/plus.svg"
 import minus from "../../00 RECURSOS PROYECTO SPRINT 2/icons/minus.svg"
 import BuscarVuelo from "./BtnBuscarVuelo/BuscarVuelo";
-import moment from 'moment';
-import { clear } from "@testing-library/user-event/dist/clear";
+
+
 
 const Header = () => {
-  const dateFormat = 'ddd, D MMM, YYYY'; // Formato personalizado
-
-  const renderExtraFooter = () => {
-    const currentDate = moment().format(dateFormat); // Obtener la fecha actual formateada
-    return <span>{currentDate}</span>; // Mostrar la fecha en el componente
-  };
-
-  const handleChange = (date) => {
-    if (date) {
-      const formattedDate = date.format(dateFormat);
-      console.log('Fecha seleccionada:', formattedDate);
-    } else {
-      console.log('Fecha deseleccionada');
-    }
-  };
+ 
 
   const [showCalendar, setShowCalendar] = useState({
     salida: false,
@@ -44,7 +30,7 @@ const Header = () => {
   const [isModalOpen2, setIsModalOpen2] = useState(false);
 
   const [passengersAmount, setPassengersAmount] = useState(0);
-  const [adultAmount, setAdultAmount] = useState(1);
+  const [adultAmount, setAdultAmount] = useState(0);
   const [childAmount, setChildAmount] = useState(0);
   const [babyAmount, setBabyAmount] = useState(0);
 
@@ -243,7 +229,7 @@ const Header = () => {
             </h2>
             <span>Origen</span>
             {
-              selectedCity.name == null && <div style={
+              selectedCity.name == null || <div style={
                 {
                   color: '#f05b5b'
                 }
@@ -298,7 +284,7 @@ const Header = () => {
             <h2>{selectedDestiny.name ? selectedDestiny.name : "---"}</h2>
             <span>Seleccione un destino</span>
             {
-              selectedDestiny.name == null && <div style={
+              selectedDestiny.name == null || <div style={
                 {
                   color: '#f05b5b'
                 }
@@ -363,14 +349,14 @@ const Header = () => {
             <div>
               <span>Salida</span>
               <h4> {showCalendar.salida ? !showCalendar.salida : 'Mar, 30 nov, 2023'}</h4>
-              {showCalendar.salida && (
+              {showCalendar.salida || (
                 <div>
                   <DatePicker format='ddd, D MMM, YYYY' renderExtraFooter={() => "$ Precios mas bajos"} />
 
                 </div>
               )}
               {
-                !showCalendar.salida && <div style={
+                !showCalendar.salida || <div style={
                   {
                     color: '#f05b5b',
                     width: '100%'
@@ -394,13 +380,13 @@ const Header = () => {
             <div>
               <span>Regreso</span>
               <h4>  {showCalendar.regreso ? !showCalendar.regreso : 'Mié, 8 dic, 2021'}</h4>
-              {showCalendar.regreso && (
+              {showCalendar.regreso || (
                 <div>
                   <DatePicker format='ddd, D MMM, YYYY' renderExtraFooter={() => "$ Precios mas bajos"} />
                 </div>
               )}
               {
-                !showCalendar.regreso && <div style={
+                !showCalendar.regreso || <div style={
                   {
                     color: '#f05b5b',
                     width: '100%'
@@ -421,7 +407,7 @@ const Header = () => {
               <img src={chevronDown} alt="chevronDown" />
             </div>
             {
-              passengersAmount === 0 && <div style={
+              passengersAmount === 0 || <div style={
                 {
                   color: '#f05b5b'
                 }
