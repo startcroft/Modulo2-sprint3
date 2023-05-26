@@ -10,10 +10,11 @@ export const StyledButton = styled.div`
     background-color: #9e247b;
     color: white;
     align-self: center;
-    font-size: 20px;
+    font-size: 18px;
     border-radius: 100px;
     border: 0;
-    margin: 2% 0% 4% 0%;
+    padding: 2%;
+    /* margin: 2% 0% 4% 0%; */
     cursor: pointer;
 
     h3 {

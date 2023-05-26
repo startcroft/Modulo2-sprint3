@@ -150,7 +150,7 @@ const Header = () => {
   const customStyles = {
     display: 'flex',
     flexDirection: 'column'
-  };
+    };
 
   const countButton = {
     width: "50px",

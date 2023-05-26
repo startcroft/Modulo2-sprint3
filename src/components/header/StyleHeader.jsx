@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import airplane from "../../00 RECURSOS PROYECTO SPRINT 2/avion.jpg";
+// import airplane from "../../00 RECURSOS PROYECTO SPRINT 2/avion.jpg";
 export const StyleSection = styled.header`
   display: flex;
   width: 100%;
+  height: 100vh;
 
   .airplane {
     display: flex;
@@ -26,7 +27,7 @@ export const StyleSection = styled.header`
     font-family: "Alata", sans-serif;
     background-color: rgb(237, 237, 237);
     position: absolute;
-    top: 12%;
+    top: 11%;
     left: 6%;
     border-radius: 15px;
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
@@ -207,8 +208,8 @@ export const StyleSection = styled.header`
 
     .modal-container{
 
-      background-color: red; 
-      color: red;
+      /* background-color: red; 
+      color: red; */
       div{
         .passengerType{
           
