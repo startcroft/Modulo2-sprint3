@@ -321,7 +321,7 @@ const Header = () => {
               <h4>Mar, 30 nov, 2021</h4>
               {showCalendar.salida && (
                 <div>
-                  <DatePicker renderExtraFooter={() => "$ Precios mas bajos"} />
+                  <DatePicker renderExtraFooter={() => "$ Precios mas bajos"}  onChange={(date, dateString) => console.log(dateString)}/>
                 </div>
               )}
             </div>
