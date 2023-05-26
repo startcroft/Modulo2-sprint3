@@ -24,6 +24,7 @@ const Header = () => {
   const [isSelected, setIsSelected] = useState(null);
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState({});
+  const [selectedDestiny, setSelectedDestiny] = useState({});
 
   const [isOpenModal1, setIsModalOpen1] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -122,8 +123,11 @@ const Header = () => {
 
   const showModal = () => {
     setIsModalOpen(true);
-    setIsModalOpen2(false);
   };
+
+  const showModal2 = () => {
+    setIsModalOpen2(true);
+  }
 
   const showModal1 = () => {
     setIsModalOpen1(true);
@@ -139,6 +143,7 @@ const Header = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
     setIsModalOpen1(false);
+    setIsModalOpen2(false);
   };
 
 
@@ -207,6 +212,7 @@ const Header = () => {
             className={`travelType ${isSelected === "button2" ? "selected" : ""
               }`}
             onClick={() => handleClickBtnSelected("button2")}
+
           >
             Viaje sencillo
           </button>
@@ -265,8 +271,8 @@ const Header = () => {
             ))}
           </Modal>
 
-          <Button type="" onClick={showModal} className="destinyButton">
-            <h2>---</h2>
+          <Button type="" onClick={showModal2} className="destinyButton" disabled={isSelected === "button2"}>
+            <h2>{selectedDestiny.name ? selectedDestiny.name : "---"}</h2>
             <span>Seleccione un destino</span>
           </Button>
           <Modal
@@ -286,7 +292,11 @@ const Header = () => {
                   <th style={{ border: "1px solid grey", padding: "8px" }}>
                     <button
                       id={item.id}
-                      Click={handleOk}
+                      onClick={() => {
+                        console.log(item);
+                        setSelectedDestiny(item);
+                        setIsModalOpen2(false);
+                      }}
                       style={{
                         width: "100%",
                         display: "flex",
@@ -358,7 +368,7 @@ const Header = () => {
             </div>
             <img src={chevronDown} alt="chevronDown" />
           </button>
-          {/* // Aquí está el nuevo modal */}
+         
           <Modal
             className="modal-container"
             style={customStyles}
