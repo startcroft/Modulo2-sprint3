@@ -37,6 +37,7 @@ const Header = () => {
   const [isSelected, setIsSelected] = useState('button1');
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState({});
+  const [selectedDestiny, setSelectedDestiny] = useState({});
 
   const [isOpenModal1, setIsModalOpen1] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -145,6 +146,10 @@ const Header = () => {
 
   const showModal1 = () => {
     setIsModalOpen1(true);
+  }
+
+  const showModal2 = () => {
+    setIsModalOpen2(true);
   }
   const handleOk = () => {
     setIsModalOpen(false);
