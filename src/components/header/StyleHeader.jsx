@@ -70,7 +70,7 @@ export const StyleSection = styled.header`
       
     }
 
-    .submitButton {
+    /* .submitButton {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -82,6 +82,7 @@ export const StyleSection = styled.header`
       border-radius: 100px;
       border: 0;
       margin: 2% 0% 4% 0%;
+      cursor: pointer;
 
       h3 {
         margin: 10px;
@@ -92,19 +93,22 @@ export const StyleSection = styled.header`
         width: 30px;
         margin-right: 10px;
       }
-    }
+    } */
     .destinos {
       display: flex;
       width: 100%;
       justify-content: space-between;
+      
 
       .destinyButton {
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 50%;
+        height: auto;
         border: 1px solid rgb(193, 193, 193);
         border-radius: 5px;
+        cursor: pointer;
         h3 {
           margin: 0;
         }
@@ -112,7 +116,9 @@ export const StyleSection = styled.header`
           margin: 5px 0px 0px 0px;
           font-size: 14px;
         }
+        
       }
+      
     }
 
     .tipoViaje {
@@ -129,13 +135,24 @@ export const StyleSection = styled.header`
         width: 140px;
         height: 20px;
         border-radius: 5px;
-        background-color: #9e247b;
-        color: white;
+        background-color: #fff;
+        color: #070707;
         font-size: 15px;
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
+
+        /* :focus{
+          background-color: #9e247b;
+          color: #fff;
+        } */
       }
+      .selected{
+        background-color: #9e247b;
+        color: #fff;
+      }
+      
     }
     .calendarios {
       display: flex;
@@ -170,6 +187,7 @@ export const StyleSection = styled.header`
       justify-content: space-between;
       .passengers {
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
         align-items: center;
         width: 50%;
@@ -186,6 +204,41 @@ export const StyleSection = styled.header`
         }
         
       }
+    }
+
+    .modal-container{
+
+      background-color: red; 
+      color: red;
+      div{
+        .passengerType{
+          
+          display: flex;
+          flex-direction: column;
+          h2{
+              font-size: 20px;
+          }
+          
+      }
+      }
+    }
+  
+  }
+
+  .modal-container{
+
+    background-color: red; 
+    color: red;
+    div{
+      .passengerType{
+        
+        display: flex;
+        flex-direction: column;
+        h2{
+            font-size: 20px;
+            margin-bottom: 1px;
+        }
+    }
     }
   }
 `;
