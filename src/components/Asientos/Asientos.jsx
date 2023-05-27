@@ -1,59 +1,43 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StylesAsientos } from './StylesAsientos';
+import { getCiudades } from '../services/getCiudades';
 
 const Asientos = () => {
-  const botonesSalidaRapidaIzquierda = [];
-  const botonesSalidaRapidaDerecha = [];
-  const botonesEstandarIzquierda = [];
-  const botonesEstandarDerecha = [];
+  const [sillas, setSillas] = useState([]);
+  useEffect(() => {
+    getCiudades('sillas')
+      .then((response) => {
+        if (!sillas.length) {
+          setSillas(response);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [sillas]);
 
-  const handleClickAsientosSalidaRapidaIsquierda = (i) => {
-    const key = (i)
-    console.log('se dio click a', key);
+  const renderItems = (init, end) => {
+    const elements = [];
+    const firstSillas = sillas.slice(init, end);
 
-  }
-  const handleClickAsientosSalidaRapidaDerecha = (i) => {
-    const key = i
-    console.log('se dio click a', key);
 
-  }
-  const handleClickAsientosEstandarIzquierda = (i) => {
-    const key = i
-    console.log('se dio click a', key);
-  }
-  const handleClickAsientosEstandarDerecha = (i) => {
-    const key = i
-    console.log('se dio click a', key);
-  }
 
-  for (let i = 1; i <= 15; i++) {
-    // const estadoAsiento ={
-    //   id: i,
-    //   disponible: false
-    // }
-
-    let disponible = false;
-    if (i === 10 || i === 11) {
-      disponible = true;
+    for (let i = 0; i < firstSillas.length; i++) {
+      console.log(firstSillas[i].id)
+      elements.push(<button
+        style={{
+          width: '50px',
+          height: "50px",
+          margin: '5px',
+          background: firstSillas[i].disponible ? "#c2c2c2" : "#fff",
+          border: 'none',
+          cursor:'pointer',
+        }}
+        disabled={firstSillas[i].disponible ? "disabled" :''}
+      >{firstSillas[i].id}</button>)
     }
-
-    botonesSalidaRapidaIzquierda.push(<button
-      key={i}
-      onClick={() => handleClickAsientosSalidaRapidaIsquierda(`${i} Salida Rapida Izquierda`)}
-      className='botonAsiento'
-      style={{ background: disponible ? '#fff' : '#96969684',
-               borderBlockColor: disponible ? '#9e247b' : '' }}
-    ></button>);
-  }
-  for (let i = 1; i <= 15; i++) {
-    botonesSalidaRapidaDerecha.push(<button key={i} onClick={() => handleClickAsientosSalidaRapidaDerecha(`${i} Salida Rapida Derecha`)} className='botonAsiento' ></button>);
-  }
-  for (let i = 1; i <= 15; i++) {
-    botonesEstandarIzquierda.push(<button key={i} onClick={() => handleClickAsientosEstandarIzquierda(`${i} Estandar Izquierda`)} className='botonAsiento' ></button>);
-  }
-  for (let i = 1; i <= 15; i++) {
-    botonesEstandarDerecha.push(<button key={i} onClick={() => handleClickAsientosEstandarDerecha(`${i} Estandar Derecha`)} className='botonAsiento' ></button>);
-  }
+    return elements;
+  };
 
 
 
@@ -77,9 +61,14 @@ const Asientos = () => {
         <div style={{ display: "flex", width: "100%", justifyContent: 'center' }}>
           <h3>Salida rápida</h3>
         </div>
-        <div style={{ display: "flex", width: "100%", justifyContent: 'space-between' }}>
+        <div style={{ display: "flex", width: "100%", justifyContent: 'space-between',  }}>
           <div style={{ width: "100%" }}>
-            {botonesSalidaRapidaIzquierda}
+            {
+              // sillas.map(silla =>(
+              //   <button>{silla.id}</button>
+              // ))
+              renderItems(0, 15)
+            }
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', justifyContent: 'space-around' }}>
             <button className='botonesGuia'>1</button>
@@ -88,16 +77,18 @@ const Asientos = () => {
             <button className='botonesGuia'>4</button>
             <button className='botonesGuia'>5</button>
           </div>
-          <div style={{ width: "100%" }}>
-            {botonesSalidaRapidaDerecha}
+          <div style={{ width: "100%", marginLeft: '20px' }}>
+            {
+              renderItems(30, 45)
+            }
           </div>
         </div>
         <div style={{ display: "flex", width: "100%", justifyContent: 'center' }}>
           <h3>Estándar</h3>
         </div>
-        <div style={{ display: "flex", width: "100%", justifyContent: 'space-between' }}>
+        <div style={{ display: "flex", width: "100%", justifyContent: 'space-between',  }}>
           <div style={{ width: "100%" }}>
-            {botonesEstandarIzquierda}
+            {renderItems(15, 30)}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', justifyContent: 'space-around' }}>
             <button className='botonesGuia'>6</button>
@@ -106,8 +97,8 @@ const Asientos = () => {
             <button className='botonesGuia'>9</button>
             <button className='botonesGuia'>10</button>
           </div>
-          <div style={{ width: "100%" }}>
-            {botonesEstandarDerecha}
+          <div style={{ width: "100%", marginLeft: '20px' }}>
+            {renderItems(45, 60)}
           </div>
         </div>
       </div>

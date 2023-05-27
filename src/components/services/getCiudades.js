@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const API_FAKE = "https://backend-project-aerolinea-production.up.railway.app/";
-const endpointCiudades = "ciudades";
 
-export const getCiudades = async() => {
+
+export const getCiudades = async(endpoint) => {
     try {
-        const { data } = await axios.get(`${API_FAKE}${endpointCiudades}`);
+        const { data } = await axios.get(`${API_FAKE}${endpoint}`);
         // console.log(data);
         return data;
     } catch (error) {

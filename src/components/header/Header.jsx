@@ -121,7 +121,7 @@ const Header = () => {
 
 
   useEffect(() => {
-    getCiudades()
+    getCiudades('ciudades')
       .then((response) => {
         if (!cities.length) {
           setCities(response);
