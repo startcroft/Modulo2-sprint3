@@ -10,25 +10,8 @@ import { SearchOutlined } from '@ant-design/icons';
 import plus from "../../00 RECURSOS PROYECTO SPRINT 2/icons/plus.svg"
 import minus from "../../00 RECURSOS PROYECTO SPRINT 2/icons/minus.svg"
 import BuscarVuelo from "./BtnBuscarVuelo/BuscarVuelo";
-import moment from 'moment';
-import { clear } from "@testing-library/user-event/dist/clear";
 
 const Header = () => {
-  const dateFormat = 'ddd, D MMM, YYYY'; // Formato personalizado
-
-  const renderExtraFooter = () => {
-    const currentDate = moment().format(dateFormat); // Obtener la fecha actual formateada
-    return <span>{currentDate}</span>; // Mostrar la fecha en el componente
-  };
-
-  const handleChange = (date) => {
-    if (date) {
-      const formattedDate = date.format(dateFormat);
-      console.log('Fecha seleccionada:', formattedDate);
-    } else {
-      console.log('Fecha deseleccionada');
-    }
-  };
 
   const [showCalendar, setShowCalendar] = useState({
     salida: false,
@@ -44,16 +27,16 @@ const Header = () => {
   const [isModalOpen2, setIsModalOpen2] = useState(false);
 
   const [passengersAmount, setPassengersAmount] = useState(0);
-  const [adultAmount, setAdultAmount] = useState(1);
+  const [adultAmount, setAdultAmount] = useState(0);
   const [childAmount, setChildAmount] = useState(0);
   const [babyAmount, setBabyAmount] = useState(0);
 
   const validarCampos = () => {
-      if(!selectedCity || !selectedDestiny || showCalendar.salida || showCalendar.regreso || !passengersAmount){
-        return true;
-      }else{
-        return false;
-      }
+    if (!selectedCity || !selectedDestiny || !showCalendar.salida || (isSelected === 'button2' ? showCalendar.regreso : !showCalendar.regreso) || !passengersAmount) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   const incrementPassengers = () => {
