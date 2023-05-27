@@ -32,7 +32,8 @@ const Header = () => {
   const [babyAmount, setBabyAmount] = useState(0);
 
   const validarCampos = () => {
-    if (!selectedCity || !selectedDestiny || !showCalendar.salida || (isSelected === 'button2' ? showCalendar.regreso : !showCalendar.regreso) || !passengersAmount) {
+    const validacionCalenadrioRegreso = (isSelected === 'button2' ? showCalendar.regreso : !showCalendar.regreso)
+    if (!selectedCity || !selectedDestiny || !showCalendar.salida || validacionCalenadrioRegreso || !passengersAmount) {
       return false;
     } else {
       return true;
@@ -310,6 +311,7 @@ const Header = () => {
                         setSelectedDestiny(item);
                         setIsModalOpen2(false);
                       }}
+                      
                       style={{
                         width: "100%",
                         display: "flex",
