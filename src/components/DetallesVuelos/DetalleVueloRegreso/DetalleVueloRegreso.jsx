@@ -1,11 +1,12 @@
 import React from 'react'
 import timeline from "../../../00 RECURSOS PROYECTO SPRINT 2/images/a26f5a5d1677c840eb556ced719307a3de52c26f.png"
 import briefcase from "../../../00 RECURSOS PROYECTO SPRINT 2/icons/briefcase.svg"
+import { ReturnFlight } from './StyleDetalleVueloRegreso'
 
 const DetalleVueloRegreso = () => {
   return (
-    <section>
-      <div>
+    <ReturnFlight>
+      <div className='returnFlightHeader'>
         <article>
           <h2>Vuelo de regreso</h2>
           <h3>Miercoles 08 dic 2021</h3>
@@ -67,7 +68,7 @@ const DetalleVueloRegreso = () => {
           </button>
         </div>
       </div>
-    </section>
+    </ReturnFlight>
   )
 }
 

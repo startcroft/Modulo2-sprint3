@@ -158,6 +158,7 @@ const Header = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
     setIsModalOpen1(false);
+    setIsModalOpen2(false);
   };
 
 
@@ -321,7 +322,11 @@ const Header = () => {
                   <th style={{ border: "1px solid grey", padding: "8px" }}>
                     <button
                       id={item.id}
-                      Click={handleOk}
+                      onClick={() => {
+                        console.log(item);
+                        setSelectedDestiny(item);
+                        setIsModalOpen2(false);
+                      }}
                       style={{
                         width: "100%",
                         display: "flex",

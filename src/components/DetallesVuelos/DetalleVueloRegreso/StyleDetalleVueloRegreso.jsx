@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-export const ExitFlight = styled.section`
+export const ReturnFlight = styled.section`
 font-family: "Alata", sans-serif;
 margin: 50px;
 width: 100%;
 
-.exitFlightHeader{
+.returnFlightHeader{
 
     display: flex;
     justify-content: space-between;

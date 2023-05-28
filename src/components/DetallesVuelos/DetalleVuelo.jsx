@@ -5,13 +5,15 @@ import YourReservation from './yourReservation/YourReservation'
 
 const DetalleVuelo = () => {
   return (
-     <>
-      <div style={{background: "#f0f1e9" }}>
-        <DetalleVueloSalida />
-        <DetalleVueloRegreso />
-      </div>
-      <YourReservation/>
+    <>
+      <div style={{ background: "#f0f1e9", display: "flex", width:"100%"}}>
+          <div style={{ background: "#f0f1e9", width: "65%" }}>
+          <DetalleVueloSalida />
+          <DetalleVueloRegreso />
+          </div>
+        <YourReservation />
 
+      </div>
 
     </>
   )
