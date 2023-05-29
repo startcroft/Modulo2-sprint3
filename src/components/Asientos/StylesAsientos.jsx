@@ -7,8 +7,11 @@ margin: 0;
 display: flex;
 flex-direction: column;
 width: auto;
-
 font-family: 'Roboto', sans-serif;
+.clicked{
+    background-color: red;
+}
+
     .botonesGuia{
         background-color:#fff;
         padding: 15px 20px 15px 20px;
@@ -27,4 +30,5 @@ font-family: 'Roboto', sans-serif;
         border-radius:5px;
         border: 1px solid #fff       ;
     }
+    
 `;

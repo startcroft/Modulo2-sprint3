@@ -4,6 +4,11 @@ import { getCiudades } from '../services/getCiudades';
 
 const Asientos = () => {
   const [sillas, setSillas] = useState([]);
+  const [isClicked, setIsClicked] = useState(false)
+
+  const handleClickSilla = () => {
+    setIsClicked(true);
+  }
   useEffect(() => {
     getCiudades('sillas')
       .then((response) => {
@@ -19,25 +24,28 @@ const Asientos = () => {
   const renderItems = (init, end) => {
     const elements = [];
     const firstSillas = sillas.slice(init, end);
-
-
-
     for (let i = 0; i < firstSillas.length; i++) {
-      console.log(firstSillas[i].id)
       elements.push(<button
         style={{
           width: '50px',
           height: "50px",
           margin: '5px',
           background: firstSillas[i].disponible ? "#c2c2c2" : "#fff",
-          border: 'none',
-          cursor:'pointer',
+          border: !firstSillas[i].disponible ? "2px solid #9e247b" : "",
+          cursor: 'pointer',
         }}
-        disabled={firstSillas[i].disponible ? "disabled" :''}
-      >{firstSillas[i].id}</button>)
+        disabled={firstSillas[i].disponible ? "disabled" : ''}
+        key={i}
+        className={isClicked ? 'clicked' : ''}
+        onClick={handleClickSilla}
+
+      >
+        {firstSillas[i].id}
+      </button>)
     }
     return elements;
   };
+
 
 
 
@@ -61,12 +69,9 @@ const Asientos = () => {
         <div style={{ display: "flex", width: "100%", justifyContent: 'center' }}>
           <h3>Salida rápida</h3>
         </div>
-        <div style={{ display: "flex", width: "100%", justifyContent: 'space-between',  }}>
-          <div style={{ width: "100%" }}>
+        <div style={{ display: "flex", width: "100%", justifyContent: 'space-between', }}>
+          <div style={{ width: "100%" }} className='prueba'>
             {
-              // sillas.map(silla =>(
-              //   <button>{silla.id}</button>
-              // ))
               renderItems(0, 15)
             }
           </div>
@@ -86,7 +91,7 @@ const Asientos = () => {
         <div style={{ display: "flex", width: "100%", justifyContent: 'center' }}>
           <h3>Estándar</h3>
         </div>
-        <div style={{ display: "flex", width: "100%", justifyContent: 'space-between',  }}>
+        <div style={{ display: "flex", width: "100%", justifyContent: 'space-between', }}>
           <div style={{ width: "100%" }}>
             {renderItems(15, 30)}
           </div>
