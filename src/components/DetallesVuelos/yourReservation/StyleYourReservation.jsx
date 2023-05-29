@@ -27,7 +27,7 @@ article{
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 22px;
+        font-size: 18px;
         height: 50px;
         margin-bottom: 30px;
 

@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import timeline from "../../../00 RECURSOS PROYECTO SPRINT 2/images/a26f5a5d1677c840eb556ced719307a3de52c26f.png"
 import briefcase from "../../../00 RECURSOS PROYECTO SPRINT 2/icons/briefcase.svg"
 import { ReturnFlight } from './StyleDetalleVueloRegreso'
+import { FlightContextUno } from '../../context/FlightContextUno'
 
 const DetalleVueloRegreso = () => {
+  const {
+    aboutFlight,
+    storageCity,
+    storageDestiny} = useContext(FlightContextUno);
+
   return (
     <ReturnFlight>
       <div className='returnFlightHeader'>
         <article>
           <h2>Vuelo de regreso</h2>
-          <h3>Miercoles 08 dic 2021</h3>
-          <p>Culiacán a cd. Mex (AICM)</p>
+          <h3>{aboutFlight.returnDate}</h3>
+          <p>{storageDestiny.name} a {storageCity.name}</p>
         </article>
         <button>Cambiar vuelo</button>
       </div>

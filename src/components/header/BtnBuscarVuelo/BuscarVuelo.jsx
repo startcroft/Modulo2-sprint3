@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import plane from "../../../00 RECURSOS PROYECTO SPRINT 2/icons/plane.svg";
 import { StyledButton } from "./StylesBuscarVuelo";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { FlightContextUno } from "../../context/FlightContextUno";
 
 const BuscarVuelo = ({ validarCampos }) => {
   const handleClick = () => {
@@ -23,9 +24,36 @@ const BuscarVuelo = ({ validarCampos }) => {
       )
     }
   }
+
+  const {passengersAmount, 
+    adultAmount, 
+    childAmount, 
+    babyAmount,
+    exitDate,
+    returnDate,
+    selectedCity,
+    selectedDestiny,
+    simpleTravel
+  } = useContext(FlightContextUno);
+
+  const saveInformation = () => {
+    const flightInformation = {
+      adultAmount, 
+      childAmount, 
+      babyAmount,
+      exitDate,
+      returnDate,
+      simpleTravel,
+    }
+
+    
+    sessionStorage.setItem("FlightContextUno", JSON.stringify(flightInformation));
+    sessionStorage.setItem("city", JSON.stringify(selectedCity));
+    sessionStorage.setItem("destiny", JSON.stringify(selectedDestiny));
+  }
   return (
     
-    <Link onClick={handleClick} style={{ width: '100%', textDecoration: 'none' }} to={validarCampos() ? 'detallevuelo' : ''} >
+    <Link onClick={ () => {handleClick(); saveInformation()}} style={{ width: '100%', textDecoration: 'none' }} to={validarCampos() ? 'detallevuelo' : ''} >
       <StyledButton >
         <button className="submitButton">
           <img src={plane} alt="plane" />

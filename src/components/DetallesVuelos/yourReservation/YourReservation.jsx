@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { ReservationInfo } from './StyleYourReservation'
+import { FlightContextUno } from '../../context/FlightContextUno';
 
 const YourReservation = () => {
+
+  const {
+    aboutFlight,
+    storageCity,
+    storageDestiny} = useContext(FlightContextUno);
+
   return (
     <ReservationInfo>
       <div>
@@ -13,22 +20,24 @@ const YourReservation = () => {
           <div className='passengersContainer'>
             <h4>Pasajeros</h4>
             <div>
-              <p>1 adulto</p>
+              <p>{aboutFlight.adultAmount} adultos</p>
+              <p>{aboutFlight.childAmount} niños</p>
+              <p>{aboutFlight.babyAmount} bebés</p>
             </div>
           </div>
           <h4>Vuelo salida</h4>
           <div className='flightDestination'>
             <div>
-              <h2>MEX</h2>
+              <h2>{storageCity.aeropuerto}</h2>
               <p>05:45 PM</p>
             </div>
             <p>___</p>
             <div>
-              <h2>CUL</h2>
+              <h2>{storageDestiny.aeropuerto}</h2>
               <p>06:47 PM</p>
             </div>
           </div>
-          <h3>Martes, 30 noviembre 2021</h3>
+          <h3>{aboutFlight.exitDate}</h3>
         </article>
       </div>
       <div className='flightCost'>
