@@ -1,37 +1,47 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import DetalleVueloSalida from './DetalleVueloSalida/DetalleVueloSalida'
 import DetalleVueloRegreso from './DetalleVueloRegreso/DetalleVueloRegreso'
+import YourReservation from './yourReservation/YourReservation'
+import { FlightContextUno } from '../context/FlightContextUno'
 
 const DetalleVuelo = () => {
+  const {
+    aboutFlight,
+    storageCity,
+    storageDestiny,
+    simpleTravel,
+    handleAboutFlight,
+    handleStorageCity,
+    handleStorageDestiny} = useContext(FlightContextUno);
+
+  useEffect(() => {
+   
+    getFromStorage();
+
+    
+  },[]);
+
+  const getFromStorage = () => {
+
+    const params = sessionStorage.getItem("FlightContextUno") ? JSON.parse(sessionStorage.getItem("FlightContextUno")) : {};
+    const city = sessionStorage.getItem("city") ? JSON.parse(sessionStorage.getItem("city")) : {};
+    const destiny = sessionStorage.getItem("destiny") ? JSON.parse(sessionStorage.getItem("destiny")) : {};
+    handleAboutFlight(params);
+    handleStorageCity(city);
+    handleStorageDestiny(destiny);
+
+  } 
   return (
     <>
-      <div>
-        <DetalleVueloSalida />
-        <DetalleVueloRegreso />
-      </div>
-      <div>
-        <h3>Tu reservación</h3>
-        <article>
-          <div>
-            <h4>Pasajeros</h4>
-            <div>
-              <p>1 adulto</p>
-            </div>
+      <div style={{ background: "#f0f1e9", display: "flex", width:"100%"}}>
+          <div style={{ background: "#f0f1e9", width: "65%" }}>
+          <DetalleVueloSalida />
+          {!simpleTravel && <DetalleVueloRegreso />}
           </div>
-          <h4>Vuelo salida</h4>
-          <div>
-            <div>
-              <h2>MEX</h2>
-              <p>05:45 PM</p>
-            </div>
-              <p>____</p>
-            <div>
-              <h2>CUL</h2>
-              <p>06:47 PM</p>
-            </div>
-          </div>
-        </article>
+        <YourReservation />
+
       </div>
+
     </>
   )
 }

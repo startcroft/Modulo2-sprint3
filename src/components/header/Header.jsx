@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import airplane from "../../00 RECURSOS PROYECTO SPRINT 2/avion.jpg";
 import calendar from "../../00 RECURSOS PROYECTO SPRINT 2/icons/calendar.svg";
 import chevronDown from "../../00 RECURSOS PROYECTO SPRINT 2/icons/chevron-down.svg";
@@ -10,6 +10,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import plus from "../../00 RECURSOS PROYECTO SPRINT 2/icons/plus.svg"
 import minus from "../../00 RECURSOS PROYECTO SPRINT 2/icons/minus.svg"
 import BuscarVuelo from "./BtnBuscarVuelo/BuscarVuelo";
+import { FlightContextUno } from "../context/FlightContextUno";
 
 const Header = () => {
 
@@ -19,17 +20,34 @@ const Header = () => {
   });
   const [isSelected, setIsSelected] = useState('button1');
   const [cities, setCities] = useState([]);
-  const [selectedCity, setSelectedCity] = useState({});
-  const [selectedDestiny, setSelectedDestiny] = useState({});
 
   const [isOpenModal1, setIsModalOpen1] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
 
-  const [passengersAmount, setPassengersAmount] = useState(0);
-  const [adultAmount, setAdultAmount] = useState(0);
-  const [childAmount, setChildAmount] = useState(0);
-  const [babyAmount, setBabyAmount] = useState(0);
+  const {passengersAmount, 
+    adultAmount, 
+    childAmount, 
+    babyAmount,
+    exitDate,
+    returnDate,
+    selectedCity,
+    selectedDestiny,
+    simpleTravel,
+    incrementPassengers,
+    decrementPassengers,
+    incrementAdultAmount,
+    decrementAdultAmount,
+    incrementBabyAmount,
+    decrementBabyAmount,
+    incrementChildAmount,
+    decrementChildAmount,
+    handleExitDate,
+    handleReturnDate,
+    handleSelectedCity,
+    handleSelectedDestiny,
+    handleSimpleTravel
+  } = useContext(FlightContextUno);
 
   const validarCampos = () => {
     const validacionCalenadrioRegreso = (isSelected === 'button2' ? showCalendar.regreso : !showCalendar.regreso)
@@ -40,88 +58,6 @@ const Header = () => {
     }
   }
 
-  const incrementPassengers = () => {
-    setPassengersAmount(
-      prevAmount => prevAmount + 1
-    )
-  }
-
-  const decrementPassengers = () => {
-    if (passengersAmount === 0) {
-      alert("No se pueden ingresar valores negativos");
-    } else {
-      setPassengersAmount(
-        prevAmount => prevAmount - 1
-      )
-    }
-
-  }
-
-  const incrementAdultAmount = () => {
-    setAdultAmount(
-      prevAmount => prevAmount + 1
-
-    )
-    incrementPassengers()
-  }
-
-  const decrementAdultAmount = () => {
-
-    if (adultAmount === 0) {
-      alert("No se pueden ingresar valores negativos");
-    } else {
-      setAdultAmount(
-        prevAmount => prevAmount - 1
-      )
-      decrementPassengers()
-    }
-
-  }
-
-  const incrementBabyAmount = () => {
-    setBabyAmount(
-      prevAmount => prevAmount + 1
-
-    )
-    incrementPassengers()
-  }
-
-  const decrementBabyAmount = () => {
-
-    if (babyAmount === 0) {
-      alert("No se pueden ingresar valores negativos");
-    } else {
-      setBabyAmount(
-        prevAmount => prevAmount - 1
-
-      )
-      decrementPassengers()
-    }
-
-  }
-
-  const incrementChildAmount = () => {
-    setChildAmount(
-      prevAmount => prevAmount + 1
-
-    )
-    incrementPassengers()
-  }
-
-  const decrementChildAmount = () => {
-
-    if (childAmount === 0) {
-      alert("No se pueden ingresar valores negativos");
-    } else {
-      setChildAmount(
-        prevAmount => prevAmount - 1
-      )
-      decrementPassengers()
-    }
-
-
-
-  }
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -134,6 +70,7 @@ const Header = () => {
   const showModal1 = () => {
     setIsModalOpen1(true);
   }
+
   const handleOk = () => {
     setIsModalOpen(false);
 
@@ -157,7 +94,6 @@ const Header = () => {
         console.log(error);
       });
   }, [cities]);
-
 
 
   const handleSubmit = (e) => {
@@ -206,15 +142,16 @@ const Header = () => {
           <button
             className={`travelType ${isSelected === "button1" ? "selected" : ""
               }`}
-            onClick={() => handleClickBtnSelected("button1")}
-          >
+            onClick={() => { handleClickBtnSelected("button1");
+                             handleSimpleTravel(false)}}
+          >  
             Viaje redondo
           </button>
           <button
             className={`travelType ${isSelected === "button2" ? "selected" : ""
               }`}
-            onClick={() => handleClickBtnSelected("button2")}
-
+            onClick={() => { handleClickBtnSelected("button2");
+                            handleSimpleTravel(true)}}
           >
             Viaje sencillo
           </button>
@@ -254,7 +191,7 @@ const Header = () => {
                       id={item.id}
                       onClick={() => {
                         console.log(item);
-                        setSelectedCity(item);
+                        handleSelectedCity(item);
                         setIsModalOpen(false);
                       }}
                       style={{
@@ -308,7 +245,7 @@ const Header = () => {
                       id={item.id}
                       onClick={() => {
                         console.log(item);
-                        setSelectedDestiny(item);
+                        handleSelectedDestiny(item);
                         setIsModalOpen2(false);
                       }}
                       
@@ -350,7 +287,9 @@ const Header = () => {
               <h4> {showCalendar.salida ? !showCalendar.salida : 'Mar, 30 nov, 2023'}</h4>
               {showCalendar.salida && (
                 <div>
-                  <DatePicker format='ddd, D MMM, YYYY' renderExtraFooter={() => "$ Precios mas bajos"} />
+                  <DatePicker format='ddd, D MMM, YYYY' 
+                  renderExtraFooter={() => "$ Precios mas bajos"} 
+                  onChange={(date, dateString) => handleExitDate(dateString)}/>
 
                 </div>
               )}
@@ -381,7 +320,9 @@ const Header = () => {
               <h4>  {showCalendar.regreso ? !showCalendar.regreso : 'Mié, 8 dic, 2021'}</h4>
               {showCalendar.regreso && (
                 <div>
-                  <DatePicker format='ddd, D MMM, YYYY' renderExtraFooter={() => "$ Precios mas bajos"} />
+                  <DatePicker format='ddd, D MMM, YYYY' 
+                  renderExtraFooter={() => "$ Precios mas bajos"}
+                  onChange={(date, dateString) => handleReturnDate(dateString)} />
                 </div>
               )}
               {
