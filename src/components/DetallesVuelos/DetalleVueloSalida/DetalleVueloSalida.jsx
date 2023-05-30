@@ -5,6 +5,7 @@ import { ExitFlight } from "./StyleDetalleVueloSalida"
 import { useState } from 'react'
 import { FlightContextUno } from '../../context/FlightContextUno'
 import { getTime } from '../../services/getCiudades'
+import { Link } from 'react-router-dom'
 
 const DetalleVueloSalida = (button) => {
   const [luggageSelected, setLuggageSelected] = useState(null);
@@ -21,27 +22,27 @@ const DetalleVueloSalida = (button) => {
     storageDestiny } = useContext(FlightContextUno);
 
 
-var fecha = new Date(aboutFlight.exitDate);
-var dia = fecha.getDate();
-var mes = fecha.getMonth() + 1;
-var año = fecha.getFullYear();
+  var fecha = new Date(aboutFlight.exitDate);
+  var dia = fecha.getDate();
+  var mes = fecha.getMonth() + 1;
+  var año = fecha.getFullYear();
 
-// Formatear la fecha en el formato deseado (dd/mm/aaaa)
-var fechaFormateada = dia + "-" + mes + "-" + año;
+  // Formatear la fecha en el formato deseado (dd/mm/aaaa)
+  var fechaFormateada = dia + "-" + mes + "-" + año;
 
-    // useEffect(() => {
-    //   getTime()
-    //     .then((response) => {
-    //       if (!schedule.length) {
-    //         setSchelude(response);
-    //         console.log(schedule[`${fechaFormateada}`][storageCity.name][storageDestiny.name]);
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-          
-    //     });
-    // }, [schedule]);
+  // useEffect(() => {
+  //   getTime()
+  //     .then((response) => {
+  //       if (!schedule.length) {
+  //         setSchelude(response);
+  //         console.log(schedule[`${fechaFormateada}`][storageCity.name][storageDestiny.name]);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+
+  //     });
+  // }, [schedule]);
 
   return (
     <ExitFlight>
@@ -51,13 +52,16 @@ var fechaFormateada = dia + "-" + mes + "-" + año;
           <h3>{aboutFlight.exitDate}</h3>
           <p>{storageCity.name} a {storageDestiny.name}</p>
         </article>
-        <button>Cambiar vuelo</button>
+        <Link style={{textDecoration:'none'}} to='/'>
+          <button>Cambiar vuelo</button>
+        </Link>
+
       </div>
 
       <h2>Selección de horarios y equipaje</h2>
       <div>
 
-          <div className='timeCard'>
+        <div className='timeCard'>
           <h3>07:00 AM</h3>
           <div>
             <p>1h</p>
@@ -85,8 +89,8 @@ var fechaFormateada = dia + "-" + mes + "-" + año;
             <h3>$ 1.945 MXN</h3>
           </button>
         </div>
-       
-      
+
+
         <div className='timeCard'>
           <h3>11:39 PM</h3>
           <div>
@@ -110,7 +114,7 @@ var fechaFormateada = dia + "-" + mes + "-" + año;
             <p> Equpaje 25kg</p>
             <h3>$ 1.945 MXN</h3>
           </button>
-        </div> 
+        </div>
       </div>
     </ExitFlight>
   )

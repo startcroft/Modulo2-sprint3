@@ -3,12 +3,13 @@ import timeline from "../../../00 RECURSOS PROYECTO SPRINT 2/images/a26f5a5d1677
 import briefcase from "../../../00 RECURSOS PROYECTO SPRINT 2/icons/briefcase.svg"
 import { ReturnFlight } from './StyleDetalleVueloRegreso'
 import { FlightContextUno } from '../../context/FlightContextUno'
+import { Link } from 'react-router-dom'
 
 const DetalleVueloRegreso = () => {
   const {
     aboutFlight,
     storageCity,
-    storageDestiny} = useContext(FlightContextUno);
+    storageDestiny } = useContext(FlightContextUno);
 
   return (
     <ReturnFlight>
@@ -18,7 +19,10 @@ const DetalleVueloRegreso = () => {
           <h3>{aboutFlight.returnDate}</h3>
           <p>{storageDestiny.name} a {storageCity.name}</p>
         </article>
-        <button>Cambiar vuelo</button>
+        <Link style={{textDecoration:'none'}}  to='/' >
+          <button>Cambiar vuelo</button>
+        </Link>
+
       </div>
 
       <h2>Selección de horarios y equipaje</h2>

@@ -30,7 +30,7 @@ width: 100%;
     button{
         height: 40px;
         font-size: 18px;
-        color: purple;
+        color: #9e247b;
         padding: 25px;
         display: flex;
         justify-content: center;
@@ -39,7 +39,7 @@ width: 100%;
         border-radius: 20px;
         margin: 30px;
         :hover{
-            background-color: purple;
+            background-color: #9e247b;
             color: white;
         }
     }
@@ -99,7 +99,7 @@ width: 100%;
       }
 
       .luggageChoosed{
-        background-color: purple!important;
+        background-color: #9e247b!important;
         color: white;
         img{
             filter: invert(1);
