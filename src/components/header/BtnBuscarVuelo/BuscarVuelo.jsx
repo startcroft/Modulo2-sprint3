@@ -10,8 +10,7 @@ const BuscarVuelo = ({ validarCampos }) => {
     const camposValidos = validarCampos();
 
     if (camposValidos) {
-      console.log(camposValidos);
-      Swal.fire(
+        Swal.fire(
         'Good job!',
         'Campos Completos!',
         'success'
