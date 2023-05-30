@@ -1,121 +1,84 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import airplane from "../../00 RECURSOS PROYECTO SPRINT 2/avion.jpg";
 import calendar from "../../00 RECURSOS PROYECTO SPRINT 2/icons/calendar.svg";
 import chevronDown from "../../00 RECURSOS PROYECTO SPRINT 2/icons/chevron-down.svg";
 import { StyleSection } from "./StyleHeader";
-// import Modal from "../header/passengersModal/PassengersModal";
 import { DatePicker, Input } from "antd";
 import { getCiudades } from "../services/getCiudades";
 import { Button, Modal } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import plus from "../../00 RECURSOS PROYECTO SPRINT 2/icons/plus.svg"
 import minus from "../../00 RECURSOS PROYECTO SPRINT 2/icons/minus.svg"
-// import { clear } from "@testing-library/user-event/dist/clear";
-// import { red } from "@mui/material/colors";
 import BuscarVuelo from "./BtnBuscarVuelo/BuscarVuelo";
-
+import { FlightContextUno } from "../context/FlightContextUno";
 
 const Header = () => {
 
   const [showCalendar, setShowCalendar] = useState({
     salida: false,
-    regreso: false
+    regreso:  false
   });
-  const [isSelected, setIsSelected] = useState(null);
+  const [isSelected, setIsSelected] = useState('button1');
   const [cities, setCities] = useState([]);
-  const [selectedCity, setSelectedCity] = useState({});
 
   const [isOpenModal1, setIsModalOpen1] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
 
-  const [passengersAmount, setPassengersAmount] = useState(1);
-  const [adultAmount, setAdultAmount] = useState(0);
-  const [childAmount, setChildAmount] = useState(0);
-  const [babyAmount, setBabyAmount] = useState(0);
+  const {passengersAmount, 
+    adultAmount, 
+    childAmount, 
+    babyAmount,
+    exitDate,
+    returnDate,
+    selectedCity,
+    selectedDestiny,
+    simpleTravel,
+    incrementPassengers,
+    decrementPassengers,
+    incrementAdultAmount,
+    decrementAdultAmount,
+    incrementBabyAmount,
+    decrementBabyAmount,
+    incrementChildAmount,
+    decrementChildAmount,
+    handleExitDate,
+    handleReturnDate,
+    handleSelectedCity,
+    handleSelectedDestiny,
+    handleSimpleTravel
+  } = useContext(FlightContextUno);
 
-  const incrementPassengers = () => {
-    setPassengersAmount(
-      prevAmount => prevAmount + 1
-    )
+  const validarCampos = () => {
+    const validacionCalenadrioRegreso = (isSelected === 'button2' ? showCalendar.regreso : !showCalendar.regreso)
+    if (!selectedCity || !selectedDestiny || !showCalendar.salida || validacionCalenadrioRegreso || !passengersAmount) {
+      return false;
+    } else {
+      return true;
+    }
   }
-
-  const decrementPassengers = () => {
-    setPassengersAmount(
-      prevAmount => prevAmount - 1
-    )
-  }
-
-  const incrementAdultAmount = () => {
-    setAdultAmount(
-      prevAmount => prevAmount + 1
-
-    )
-    incrementPassengers()
-  }
-
-  const decrementAdultAmount = () => {
-    setAdultAmount(
-      prevAmount => prevAmount - 1
-
-    )
-    decrementPassengers()
-  }
-
-  const incrementBabyAmount = () => {
-    setBabyAmount(
-      prevAmount => prevAmount + 1
-
-    )
-    incrementPassengers()
-  }
-
-  const decrementBabyAmount = () => {
-    setBabyAmount(
-      prevAmount => prevAmount - 1
-
-    )
-    decrementPassengers()
-  }
-
-  const incrementChildAmount = () => {
-    setChildAmount(
-      prevAmount => prevAmount + 1
-
-    )
-    incrementPassengers()
-  }
-
-  const decrementChildAmount = () => {
-    setChildAmount(
-      prevAmount => prevAmount - 1
-
-    )
-    decrementPassengers()
-  }
-
-
 
 
   const showModal = () => {
     setIsModalOpen(true);
-    setIsModalOpen2(false);
   };
+
+  const showModal2 = () => {
+    setIsModalOpen2(true);
+  }
 
   const showModal1 = () => {
     setIsModalOpen1(true);
   }
+
   const handleOk = () => {
     setIsModalOpen(false);
-    // const buttonId = Number( e.target.id);
-    // console.log('se dio click a', buttonId );
-    // const city = cities.find((city) => city.id === buttonId);
-    // console.log(city);
-    // setSelectedCity(city);
+
   };
   const handleCancel = () => {
     setIsModalOpen(false);
     setIsModalOpen1(false);
+    setIsModalOpen2(false);
   };
 
 
@@ -131,7 +94,6 @@ const Header = () => {
         console.log(error);
       });
   }, [cities]);
-
 
 
   const handleSubmit = (e) => {
@@ -153,11 +115,15 @@ const Header = () => {
     };
 
   const countButton = {
-    width: "50px",
-    height: "50px",
+    width: "40px",
+    height: "40px",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    background: 'transparent',
+    border: 'none',
+    cursor: 'pointer'
+
   }
 
 
@@ -176,26 +142,36 @@ const Header = () => {
           <button
             className={`travelType ${isSelected === "button1" ? "selected" : ""
               }`}
-            onClick={() => handleClickBtnSelected("button1")}
-          >
+            onClick={() => { handleClickBtnSelected("button1");
+                             handleSimpleTravel(false)}}
+          >  
             Viaje redondo
           </button>
           <button
             className={`travelType ${isSelected === "button2" ? "selected" : ""
               }`}
-            onClick={() => handleClickBtnSelected("button2")}
+            onClick={() => { handleClickBtnSelected("button2");
+                            handleSimpleTravel(true)}}
           >
             Viaje sencillo
           </button>
         </div>
         <div className="destinos">
-          <Button type="" onClick={showModal} className="destinyButton">
+          <Button type="input" onClick={showModal} className="destinyButton" >
 
             <h2>
               {selectedCity.name ? selectedCity.name : "Ciudad de México"}
             </h2>
             <span>Origen</span>
+            {
+              selectedCity.name == null && <div style={
+                {
+                  color: '#f05b5b'
+                }
+              }>Complete este campo</div>
+            }
           </Button>
+
           <Modal
 
             title="¿A donde viajas?"
@@ -215,7 +191,7 @@ const Header = () => {
                       id={item.id}
                       onClick={() => {
                         console.log(item);
-                        setSelectedCity(item);
+                        handleSelectedCity(item);
                         setIsModalOpen(false);
                       }}
                       style={{
@@ -228,7 +204,10 @@ const Header = () => {
                         cursor: "pointer",
                       }}
                     >
-                      <h3 style={{ margin: "2%" }}>{item.name}</h3>
+                      <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <h3 style={{ margin: "2%" }}>{item.name}</h3>
+                        <p style={{ margin: 0, padding: 0 }}>{item.aeropuerto}</p>
+                      </div>
                     </button>
                   </th>
                 </tr>
@@ -236,9 +215,16 @@ const Header = () => {
             ))}
           </Modal>
 
-          <Button type="" onClick={showModal} className="destinyButton">
-            <h2>---</h2>
+          <Button type="" onClick={showModal2} className="destinyButton" >
+            <h2>{selectedDestiny.name ? selectedDestiny.name : "---"}</h2>
             <span>Seleccione un destino</span>
+            {
+              selectedDestiny.name == null && <div style={
+                {
+                  color: '#f05b5b'
+                }
+              }>Complete este campo</div>
+            }
           </Button>
           <Modal
             style={{ width: "100px" }}
@@ -257,7 +243,12 @@ const Header = () => {
                   <th style={{ border: "1px solid grey", padding: "8px" }}>
                     <button
                       id={item.id}
-                      Click={handleOk}
+                      onClick={() => {
+                        console.log(item);
+                        handleSelectedDestiny(item);
+                        setIsModalOpen2(false);
+                      }}
+                      
                       style={{
                         width: "100%",
                         display: "flex",
@@ -268,7 +259,11 @@ const Header = () => {
                         cursor: "pointer",
                       }}
                     >
-                      <h3 style={{ margin: "2%" }}>{item.name}</h3>
+                      <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <h3 style={{ margin: "2%" }}>{item.name}</h3>
+                        <p style={{ margin: 0, padding: 0 }}>{item.aeropuerto}</p>
+                      </div>
+
                     </button>
                   </th>
                 </tr>
@@ -289,12 +284,23 @@ const Header = () => {
             <img src={calendar} alt="calendar" />
             <div>
               <span>Salida</span>
-              <h4>Mar, 30 nov, 2021</h4>
+              <h4> {showCalendar.salida ? !showCalendar.salida : 'Mar, 30 nov, 2023'}</h4>
               {showCalendar.salida && (
                 <div>
-                  <DatePicker renderExtraFooter={() => "$ Precios mas bajos"} />
+                  <DatePicker format='ddd, D MMM, YYYY' 
+                  renderExtraFooter={() => "$ Precios mas bajos"} 
+                  onChange={(date, dateString) => handleExitDate(dateString)}/>
+
                 </div>
               )}
+              {
+                !showCalendar.salida && <div style={
+                  {
+                    color: '#f05b5b',
+                    width: '100%'
+                  }
+                }>Seleccione una fecha</div>
+              }
             </div>
           </button>
 
@@ -311,25 +317,41 @@ const Header = () => {
             <img src={calendar} alt="calendar" />
             <div>
               <span>Regreso</span>
-              <h4>Mié, 8 dic, 2021</h4>
+              <h4>  {showCalendar.regreso ? !showCalendar.regreso : 'Mié, 8 dic, 2021'}</h4>
               {showCalendar.regreso && (
                 <div>
-                  <DatePicker renderExtraFooter={() => "$ Precios mas bajos"} />
+                  <DatePicker format='ddd, D MMM, YYYY' 
+                  renderExtraFooter={() => "$ Precios mas bajos"}
+                  onChange={(date, dateString) => handleReturnDate(dateString)} />
                 </div>
               )}
+              {
+                !showCalendar.regreso && <div style={
+                  {
+                    color: '#f05b5b',
+                    width: '100%'
+                  }
+                }>Seleccione una fecha</div>
+              }
             </div>
           </button>
         </div>
 
         <div className="pasajeros">
           <button className="passengers" onClick={showModal1}>
-            <div>
-              <span>Pasajeros</span>
-              <h4> {passengersAmount} pasajeros</h4>
+            <div style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+              <div>
+                <span>Pasajeros</span>
+                <h4> {passengersAmount} pasajeros</h4>
+              </div>
+              <img src={chevronDown} alt="chevronDown" />
             </div>
-            <img src={chevronDown} alt="chevronDown" />
+            {
+              passengersAmount === 0 && <div style={{color: '#f05b5b'}}>Complete este campo</div>
+            }
           </button>
-          {/* // Aquí está el nuevo modal */}
+
+
           <Modal
             className="modal-container"
             style={customStyles}
@@ -337,53 +359,59 @@ const Header = () => {
             onOk={handleCancel}
             onCancel={handleCancel}
           >
-            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: 'center' }}>
               <div className="passengerType">
                 <h2>Adultos</h2>
-                <h3>(13 + años)</h3>
+                <h4>(13 + años)</h4>
               </div>
 
-              <div style={{ display: "flex", alignSelf: "center" }}>
-                <button style={countButton} onClick={incrementAdultAmount}>
-                  <img src={plus} alt="plus" />
+              <div style={{ display: "flex", alignItems: "center", border: '1px solid gray', padding: '0px', height: '2.51rem', gap: '7px', borderRadius: '15px' }}>
+                <button className="contadorBotones" style={countButton} onClick={decrementAdultAmount}>
+                  <img src={minus} alt="plus" />
                 </button>
+                <p style={{ fontSize: '25px', fontWeight: 'lighter' }}>|</p>
                 <h2 style={{ margin: "15px" }}>{adultAmount}</h2>
-                <button style={countButton} onClick={decrementAdultAmount}>
-                  <img src={minus} alt="minus" />
+                <p style={{ fontSize: '25px', fontWeight: 'lighter' }}>|</p>
+                <button className="contadorBotones" style={countButton} onClick={incrementAdultAmount}>
+                  <img src={plus} alt="minus" />
                 </button>
               </div>
             </div>
 
-            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: 'center' }}>
               <div className="passengerType">
                 <h2>Niños</h2>
-                <h3>(2 a 12 años)</h3>
+                <h4>(2 a 12 años)</h4>
               </div>
 
-              <div style={{ display: "flex", alignSelf: "center" }}>
-                <button style={countButton} onClick={incrementChildAmount}>
-                  <img src={plus} alt="plus" />
+              <div style={{ display: "flex", alignItems: "center", border: '1px solid gray', padding: '0px', height: '2.51rem', gap: '7px', borderRadius: '15px' }}>
+                <button className="contadorBotones" style={countButton} onClick={decrementChildAmount}>
+                  <img src={minus} alt="plus" />
                 </button>
+                <p style={{ fontSize: '25px', fontWeight: 'lighter' }}>|</p>
                 <h2 style={{ margin: "15px" }}>{childAmount}</h2>
-                <button style={countButton} onClick={decrementChildAmount}>
-                  <img src={minus} alt="minus" />
+                <p style={{ fontSize: '25px', fontWeight: 'lighter' }}>|</p>
+                <button className="contadorBotones" style={countButton} onClick={incrementChildAmount}>
+                  <img src={plus} alt="minus" />
                 </button>
               </div>
             </div>
 
-            <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <div style={{ display: "flex", justifyContent: "space-evenly", alignItems: 'center' }}>
               <div className="passengerType">
                 <h2>Bebés</h2>
-                <h3>(0 a 2 años)</h3>
+                <h4>(0 a 23 años)</h4>
               </div>
 
-              <div style={{ display: "flex", alignSelf: "center" }}>
-                <button style={countButton} onClick={incrementBabyAmount}>
-                  <img src={plus} alt="plus" />
+              <div style={{ display: "flex", alignItems: "center", border: '1px solid gray', padding: '0px', height: '2.51rem', gap: '7px', borderRadius: '15px' }}>
+                <button className="contadorBotones" style={countButton} onClick={decrementBabyAmount}>
+                  <img src={minus} alt="plus" />
                 </button>
+                <p style={{ fontSize: '25px', fontWeight: 'lighter' }}>|</p>
                 <h2 style={{ margin: "15px" }}>{babyAmount}</h2>
-                <button style={countButton} onClick={decrementBabyAmount}>
-                  <img src={minus} alt="minus" />
+                <p style={{ fontSize: '25px', fontWeight: 'lighter' }}>|</p>
+                <button className="contadorBotones" style={countButton} onClick={incrementBabyAmount}>
+                  <img src={plus} alt="minus" />
                 </button>
               </div>
             </div>
@@ -395,12 +423,7 @@ const Header = () => {
             </div>
           </button>
         </div>
-
-        {/* <button className="submitButton">
-          <img src={plane} alt="plane" />
-          <h3>Buscar vuelos</h3>
-        </button> */}
-        <BuscarVuelo />
+        <BuscarVuelo validarCampos={validarCampos} />
       </form>
     </StyleSection>
   );

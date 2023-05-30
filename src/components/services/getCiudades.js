@@ -13,3 +13,14 @@ export const getCiudades = async(endpoint) => {
         return [];
     }
 }
+
+export const getTime = async() => {
+    try {
+        const { dates } = await axios.get(`${API_FAKE}/dates`);
+        // console.log(data);
+        return dates;
+    } catch (error) {
+        // console.log(error);
+        return [];
+    }
+}

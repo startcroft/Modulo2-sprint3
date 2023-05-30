@@ -9,7 +9,7 @@ flex-direction: column;
 width: auto;
 font-family: 'Roboto', sans-serif;
 .clicked{
-    background-color: red;
+    background-color: #9e247b !important;
 }
 
     .botonesGuia{

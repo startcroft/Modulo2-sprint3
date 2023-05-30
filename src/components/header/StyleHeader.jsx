@@ -188,6 +188,7 @@ export const StyleSection = styled.header`
       justify-content: space-between;
       .passengers {
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
         align-items: center;
         width: 50%;
@@ -217,8 +218,8 @@ export const StyleSection = styled.header`
           flex-direction: column;
           h2{
               font-size: 20px;
-              margin-bottom: 1px;
           }
+          
       }
       }
     }
