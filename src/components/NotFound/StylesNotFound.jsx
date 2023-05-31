@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import imgNotFonud from '../../00 RECURSOS PROYECTO SPRINT 2/images/avionNotFound.jpg'
 
-export const StylesNotFonud = styled.main`
+export const StylesNotFonud = styled.div`
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
     background-image: url(${imgNotFonud});
     margin: 0;
