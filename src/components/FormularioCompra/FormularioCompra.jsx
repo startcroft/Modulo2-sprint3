@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { StylesForm } from './StylesFormulario';
+import React, { useState, useEffect, useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
-import { Button, Container, Form, Modal } from 'semantic-ui-react';
+import { Button,  Form, Modal } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-
+import './Styles.css'
+import { FlightContextUno } from '../context/FlightContextUno';
 
 
 const FormularioCompra = () => {
+    const {
+        aboutFlight,
+        storageCity,
+        storageDestiny } = useContext(FlightContextUno);
     const [numInputs, setNumInputs] = useState(0);
     // const [formData, setFormData] = useState({});
     const [open, setOpen] = React.useState(false)
@@ -45,7 +49,7 @@ const FormularioCompra = () => {
             const numInputs = adultAmount + babyAmount + childAmount;
             setNumInputs(Number(numInputs));
         }
-
+        console.log(aboutFlight, storageCity,storageDestiny);
     }, []);
 
 
@@ -73,6 +77,7 @@ const FormularioCompra = () => {
                     onChange={formik.handleChange}
                     placeholder={`Nombre Pasajero ${i + 1}`}
                     error={formik.errors.name}
+                    className='inputForm' 
                 />
 
             );
@@ -84,6 +89,7 @@ const FormularioCompra = () => {
                     onChange={formik.handleChange}
                     placeholder="Ingrese el número de teléfono"
                     error={formik.errors.tel}
+                    className='inputForm' 
                 />
             );
 
@@ -95,6 +101,7 @@ const FormularioCompra = () => {
                     onChange={formik.handleChange}
                     placeholder="Ingrese el número de documento"
                     error={formik.errors.documento}
+                    className='inputForm' 
                 />
             );
         }
@@ -102,21 +109,21 @@ const FormularioCompra = () => {
     };
 
     return (
-        // <StylesForm>
-        <Container style={{ with: '50%' }}>
+        
+        <div className='container' >
             <link
                 async
                 rel="stylesheet"
                 href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
             />
-            <Form onSubmit={formik.handleSubmit} >
+            <Form className='Form' onSubmit={formik.handleSubmit}  >
                 {/* <label>Pasajeros</label> */}
 
                 {renderInputs()}
 
                 {/* <label>Tarjeta de crédito: </label> */}
-                <Form.Input type="text" placeholder="Ingrese el número de tarjeta de crédito" value={formik.values.nTarjetaCredito} error={formik.errors.nTarjetaCredito} name='nTarjetaCredito' onChange={formik.handleChange} />
-                <Form.Input type="text" placeholder='Ingrese su Email' value={formik.values.email} error={formik.errors.email} name='email' onChange={formik.handleChange} />
+                <Form.Input className='inputForm' type="text" placeholder="Ingrese el número de tarjeta de crédito" value={formik.values.nTarjetaCredito} error={formik.errors.nTarjetaCredito} name='nTarjetaCredito' onChange={formik.handleChange} />
+                <Form.Input className='inputForm'  type="text" placeholder='Ingrese su Email' value={formik.values.email} error={formik.errors.email} name='email' onChange={formik.handleChange} />
                 {/* <Form.Button type="submit">Enviar</Form.Button> */}
 
                 <Modal
@@ -125,17 +132,18 @@ const FormularioCompra = () => {
                     onClose={() => setOpen(false)}
                     onOpen={() => onSubmit ? setOpen(true) : setOpen(false)}
                     trigger={<Button type='submit'>Enviar</Button>}
+                    style={{width:'20%'}}
                 >
                     <Modal.Header>Gracias por tu compra!</Modal.Header>
                     <Modal.Content>
                         <Modal.Description>
                             {
-                                <div>
-                                    <h3>Nombre: {name}</h3>
-                                    <h4>Email: {email}</h4>
-                                    <h4>Documento: {`${documento ? documento.slice(0, 6) : ''}****`}</h4>
-                                    <h5>Tel: {tel}</h5>
-                                    <h4>Cuenta Bancaria: {`***********${nTarjetaCredito ? nTarjetaCredito.slice(14) : ''} `}</h4>
+                                <div className='info'>
+                                    <h3 className='informacion'>Nombre: <span>{name}</span> </h3>
+                                    <h4 className='informacion'>Email: <span>{email}</span></h4>
+                                    <h4 className='informacion'>Documento: <span>{`${documento ? documento.slice(0, 6) : ''}****`}</span> </h4>
+                                    <h5 className='informacion'>Tel: <span>{tel}</span> </h5>
+                                    <h4 className='informacion'>Cuenta Bancaria: <span>{`***********${nTarjetaCredito ? nTarjetaCredito.slice(14) : ''} `}</span> </h4>
                                 </div>
 
                             }
@@ -149,9 +157,9 @@ const FormularioCompra = () => {
                     </Modal.Actions>
                 </Modal>
             </Form>
-        </Container>
+        </div>
 
-        // </StylesForm>
+       
 
     );
 };
