@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { ReservationInfo } from './StyleYourReservation'
 import { FlightContextUno } from '../../context/FlightContextUno';
 import SeleccionarAsiento from '../SelecAsiento/SeleccionarAsiento';
@@ -8,7 +8,18 @@ const YourReservation = () => {
   const {
     aboutFlight,
     storageCity,
-    storageDestiny} = useContext(FlightContextUno);
+    storageDestiny,
+    departureTime,
+    departureLuggage,
+    returnLuggage,
+    tarifa,
+    handleTarifa } = useContext(FlightContextUno);
+
+    
+  useEffect(() => {
+ handleTarifa(((aboutFlight.adultAmount + aboutFlight.childAmount) * (departureLuggage + returnLuggage) * 0.4) + ((aboutFlight.adultAmount + aboutFlight.childAmount) * (departureLuggage + returnLuggage)))
+      },[]);
+
 
   return (
     <ReservationInfo>
@@ -30,12 +41,12 @@ const YourReservation = () => {
           <div className='flightDestination'>
             <div>
               <h2>{storageCity.aeropuerto}</h2>
-              <p>05:45 PM</p>
+              <p>{departureTime.salida}</p>
             </div>
             <p>___</p>
             <div>
               <h2>{storageDestiny.aeropuerto}</h2>
-              <p>06:47 PM</p>
+              <p>{departureTime.llegada}</p>
             </div>
           </div>
           <h3>{aboutFlight.exitDate}</h3>
@@ -43,32 +54,32 @@ const YourReservation = () => {
       </div>
       <div className='flightCost'>
         <div className='titleCost'>
-        <h3>Costos de vuelo</h3>
+          <h3>Costos de vuelo</h3>
         </div>
         <article>
           <p>Tarifa base</p>
-          <p>$1.505 MXN</p>
+          <p>{(aboutFlight.adultAmount + aboutFlight.childAmount) * (departureLuggage + returnLuggage)}</p>
         </article>
         <article>
           <p>Descuento promocional</p>
-          <p>$1.034 MXN</p>
+          <p>$0</p>
         </article>
         <article>
           <p>Tarifa base con descuento</p>
-          <p>$471 MXN</p>
+          <p>$0</p>
         </article>
         <article>
           <p>IVA tarifa</p>
-          <p>$75 MXN</p>
+          <p>$ {((aboutFlight.adultAmount + aboutFlight.childAmount) * (departureLuggage + returnLuggage) * 0.4)}</p>
         </article>
         <article>
           <p>Total</p>
-          <p>$548 MXN</p>
+          <p>{((aboutFlight.adultAmount + aboutFlight.childAmount) * (departureLuggage + returnLuggage) * 0.4) + ((aboutFlight.adultAmount + aboutFlight.childAmount) * (departureLuggage + returnLuggage))}</p>
         </article>
       </div>
-      
+
     </ReservationInfo>
-    
+
   )
 }
 

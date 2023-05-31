@@ -21,13 +21,52 @@ const FlightProvider = ({ children }) => {
 
     const [aboutFlight, setAboutFlight] = useState({});
 
+    const [departureLuggage, setDepartureLuggage] = useState(0);
+    const [returnLuggage, setReturnLuggage] = useState(0);
+
+    const handleDepartureLuggage = (value) => {
+        setDepartureLuggage(value);
+    }
+
+    const handleReturnLuggage = (value) => {
+        setReturnLuggage(value);
+    }
+
+    const [departureTime, setDepartureTime] = useState({
+        salida: "",
+        llegada: ""
+    });
+    const [returnTime, setReturnTime] = useState({
+        salida: "",
+        llegada: ""
+    });
+    const [tarifa, setTarifa] = useState();
+
+    const handleTarifa = (value) => {
+        setTarifa(value);
+    }
+
+    const handleDepartureTime = (nuevosValores) => {
+        setDepartureTime({
+            ...departureTime,
+            ...nuevosValores
+        })
+    }
+
+    const handleReturnTime = (nuevosValores) => {
+        setReturnTime({
+            ...returnTime,
+            ...nuevosValores
+        })
+    }
+
+
     const handleStorageCity = (value) => {
         setStorageCity(value);
         
     } 
      const handleStorageDestiny = (value) => {
         setStorageDestiny(value);
-        
     }
 
     const handleAboutFlight = (value) => {
@@ -153,6 +192,11 @@ const FlightProvider = ({ children }) => {
         aboutFlight,
         storageCity,
         storageDestiny,
+        departureTime,
+        returnTime,
+        departureLuggage,
+        returnLuggage,
+        tarifa,
         incrementPassengers,
         decrementPassengers,
         incrementAdultAmount,
@@ -168,7 +212,12 @@ const FlightProvider = ({ children }) => {
         handleSimpleTravel,
         handleAboutFlight,
         handleStorageCity,
-        handleStorageDestiny
+        handleStorageDestiny,
+        handleDepartureTime,
+        handleReturnTime,
+        handleDepartureLuggage,
+        handleReturnLuggage,
+        handleTarifa
     };
 
 
