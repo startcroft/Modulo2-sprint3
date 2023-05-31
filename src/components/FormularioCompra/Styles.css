@@ -1,0 +1,31 @@
+
+.Form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    
+}
+.inputForm{
+    display: flex;
+    width: 40%;
+    padding: 0;
+    margin: 0;
+}
+
+
+.info{
+    display: flex;
+    flex-direction: column;
+    margin: 2%;
+    
+}
+.informacion{
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    margin: 3%;
+}
