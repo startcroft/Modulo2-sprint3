@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { StylesAsientos } from './StylesAsientos';
 import { getCiudades } from '../services/getCiudades';
 import { ClassNames } from '@emotion/react';
+import  YourReservation  from '../DetallesVuelos/yourReservation/YourReservation';
 
 const Asientos = () => {
   const [sillas, setSillas] = useState([]);
@@ -88,6 +89,7 @@ const Asientos = () => {
 
 
   return (
+    <div style={{ display: 'flex', width: "100%", backgroundColor: "#f0f0f0" }}>
     <StylesAsientos >
       <h3>Seleccione sus asientos</h3>
       <div style={{ width: '30rem', display: 'flex', flexDirection: "column", }}>
@@ -204,6 +206,11 @@ const Asientos = () => {
         </div>
       }
     </StylesAsientos>
+    <div>
+    <YourReservation/>
+    </div>
+    </div>
+
   )
 }
 

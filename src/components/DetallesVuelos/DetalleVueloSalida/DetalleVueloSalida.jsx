@@ -9,8 +9,6 @@ import { Link } from 'react-router-dom'
 
 const DetalleVueloSalida = (button) => {
   const [luggageSelected, setLuggageSelected] = useState(null);
-  const [schedule, setSchelude] = useState([])
-
   const handleLuggageSelected = (button) => {
     setLuggageSelected(button);
     console.log(button);
@@ -19,8 +17,20 @@ const DetalleVueloSalida = (button) => {
   const {
     aboutFlight,
     storageCity,
-    storageDestiny } = useContext(FlightContextUno);
+    storageDestiny,
+    handleDepartureLuggage,
+    handleDepartureTime } = useContext(FlightContextUno);
 
+    const [city, setCity] = useState();
+    const [destiny, setDestiny] = useState();
+
+   const handleCity = () =>{
+    setCity(storageCity);
+   }
+
+   const handleDestiny = () =>{
+    setCity(storageDestiny);
+   }
 
   var fecha = new Date(aboutFlight.exitDate);
   var dia = fecha.getDate();
@@ -30,19 +40,6 @@ const DetalleVueloSalida = (button) => {
   // Formatear la fecha en el formato deseado (dd/mm/aaaa)
   var fechaFormateada = dia + "-" + mes + "-" + año;
 
-  // useEffect(() => {
-  //   getTime()
-  //     .then((response) => {
-  //       if (!schedule.length) {
-  //         setSchelude(response);
-  //         console.log(schedule[`${fechaFormateada}`][storageCity.name][storageDestiny.name]);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-
-  //     });
-  // }, [schedule]);
 
   return (
     <ExitFlight>
@@ -52,7 +49,7 @@ const DetalleVueloSalida = (button) => {
           <h3>{aboutFlight.exitDate}</h3>
           <p>{storageCity.name} a {storageDestiny.name}</p>
         </article>
-        <Link style={{textDecoration:'none'}} to='/'>
+        <Link style={{ textDecoration: 'none' }} to='/'>
           <button>Cambiar vuelo</button>
         </Link>
 
@@ -60,7 +57,6 @@ const DetalleVueloSalida = (button) => {
 
       <h2>Selección de horarios y equipaje</h2>
       <div>
-
         <div className='timeCard'>
           <h3>07:00 AM</h3>
           <div>
@@ -70,54 +66,77 @@ const DetalleVueloSalida = (button) => {
           </div>
           <h3>08:00 AM</h3>
           <button className={`briefcaseButton ${luggageSelected === "luggage1" ? "luggageChoosed" : ""}`}
-            onClick={() => handleLuggageSelected(`luggage1`)}>
+            onClick={() => {handleLuggageSelected(`luggage1`);
+                            handleDepartureTime({ salida: "07:00 AM", llegada: "08:00 AM"});
+                            handleDepartureLuggage(150000);
+            }}>
 
             <img src={briefcase} alt="briefcase" />
             <p>1 objeto personal</p>
-            <h3>$ 548 MXN</h3>
+            <h3>$ 150.000</h3>
           </button>
           <button className={`briefcaseButton ${luggageSelected === "luggage2" ? "luggageChoosed" : ""}`}
-            onClick={() => handleLuggageSelected(`luggage2`)}>
+            onClick={() => {handleLuggageSelected(`luggage2`);
+                           handleDepartureTime({ salida: "07:00 AM", llegada: "08:00 AM"});
+                           handleDepartureLuggage(200000);
+          }}>
             <img src={briefcase} alt="briefcase" />
             <p>Equipaje de mano</p>
-            <h3>$ 1.084 MXN</h3>
+            <h3>$ 200.000</h3>
           </button>
           <button className={`briefcaseButton ${luggageSelected === "luggage3" ? "luggageChoosed" : ""}`}
-            onClick={() => handleLuggageSelected(`luggage3`)}>
+            onClick={() => {handleLuggageSelected(`luggage3`);
+                            handleDepartureTime({ salida: "07:00 AM", llegada: "08:00 AM"});
+                            handleDepartureLuggage(250000)
+          }}>
             <img src={briefcase} alt="briefcase" />
             <p> Equipaje 25kg</p>
-            <h3>$ 1.945 MXN</h3>
+            <h3>$ 250.000</h3>
           </button>
         </div>
 
 
         <div className='timeCard'>
-          <h3>11:39 PM</h3>
+          <h3>11:00 PM</h3>
           <div>
             <p>1h 57 min</p>
             <img src={timeline} alt="timeline" />
             <p>Sin escalas</p>
           </div>
-          <h3>11:43 AM</h3>
-          <button className='briefcaseButton'>
+          <h3>12:00 AM</h3>
+          <button className={`briefcaseButton ${luggageSelected === "luggage4" ? "luggageChoosed" : ""}`}
+            onClick={() => {handleLuggageSelected(`luggage4`)
+                            handleDepartureTime({ salida: "11:00 AM", llegada: "12:00 AM"});
+                            handleDepartureLuggage(150000)
+            }}>
             <img src={briefcase} alt="briefcase" />
             <p>1 objeto personal</p>
-            <h3>$ 548 MXN</h3>
+            <h3>$ 150.000</h3>
           </button>
-          <button className='briefcaseButton'>
+          <button className={`briefcaseButton ${luggageSelected === "luggage5" ? "luggageChoosed" : ""}`}
+            onClick={() => {handleLuggageSelected(`luggage5`)
+                            handleDepartureTime({ salida: "11:00 AM", llegada: "12:00 AM"});
+                            handleDepartureLuggage(200000)
+            }}>
             <img src={briefcase} alt="briefcase" />
             <p>Equipaje de mano</p>
-            <h3>$ 1.084 MXN</h3>
+            <h3>$ 200.000</h3>
           </button>
-          <button className='briefcaseButton'>
+          <button className={`briefcaseButton ${luggageSelected === "luggage6" ? "luggageChoosed" : ""}`}
+            onClick={() => {handleLuggageSelected(`luggage6`)
+                            handleDepartureTime({ salida: "11:00 AM", llegada: "12:00 AM"});
+                            handleDepartureLuggage(250000)
+            }}>
             <img src={briefcase} alt="briefcase" />
             <p> Equpaje 25kg</p>
-            <h3>$ 1.945 MXN</h3>
-          </button>
+            <h3>$ 250.000</h3>
+      </button> 
         </div>
+       
       </div>
     </ExitFlight>
   )
 }
 
 export default DetalleVueloSalida
+ 

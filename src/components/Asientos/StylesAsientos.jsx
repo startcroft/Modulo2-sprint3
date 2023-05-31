@@ -6,8 +6,9 @@ padding: 40px 80px;
 margin: 0;
 display: flex;
 flex-direction: column;
-width: auto;
+width: 60%;
 font-family: 'Roboto', sans-serif;
+align-self: center;
 .clicked{
     background-color: #9e247b !important;
 }
