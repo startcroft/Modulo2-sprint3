@@ -41,7 +41,7 @@ const DetalleVuelo = () => {
         </div>
         <div>
           <YourReservation />
-          <SeleccionarAsiento />
+          <SeleccionarAsiento text='Seleccionar Asiento' ruta='/asientos'/>
         </div>
 
 

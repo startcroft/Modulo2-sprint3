@@ -3,6 +3,8 @@ import { StylesAsientos } from './StylesAsientos';
 import { getCiudades } from '../services/getCiudades';
 import { ClassNames } from '@emotion/react';
 import  YourReservation  from '../DetallesVuelos/yourReservation/YourReservation';
+import SeleccionarAsiento from '../DetallesVuelos/SelecAsiento/SeleccionarAsiento';
+import imgPaypal from '../../00 RECURSOS PROYECTO SPRINT 2/images/paypal.png'
 
 const Asientos = () => {
   const [sillas, setSillas] = useState([]);
@@ -207,6 +209,10 @@ const Asientos = () => {
     </StylesAsientos>
     <div>
     <YourReservation/>
+    
+    <SeleccionarAsiento text='Pagar con PayPal' ruta={'/compra'} image={imgPaypal}/>
+  
+    
     </div>
     </div>
 
