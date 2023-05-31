@@ -8,16 +8,25 @@ import { FlightContextUno } from '../context/FlightContextUno';
 
 
 const FormularioCompra = () => {
-    const {
-        aboutFlight,
-        storageCity,
-        storageDestiny } = useContext(FlightContextUno);
+    // const {
+    //     aboutFlight,
+    //     storageCity,
+    //     storageDestiny } = useContext(FlightContextUno);
+
     const [numInputs, setNumInputs] = useState(0);
     // const [formData, setFormData] = useState({});
     const [open, setOpen] = React.useState(false)
     const [onSubmit, setOnSubmit] = useState(false)
-    const [infoVuelo, setInfoVuelo] = useState([])
+    const [infoVuelo, setInfoVuelo] = useState([]);
+    const [nameDestiny, setNameDestiny] = useState('')
+    const [nameCity, setNameCity] = useState("")
+    const [exitDate, setExitDate] = useState('')
+    const [returnDate, setReturnDate] = useState("")
+    const [simpleTravel, setSimpleTravel] = useState(false)
+    const [asientoId, setAsientoId] = useState('')
+
     const { name, tel, documento, nTarjetaCredito, email } = infoVuelo;
+    
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -39,17 +48,31 @@ const FormularioCompra = () => {
             setOnSubmit(true);
             setInfoVuelo(formValue);
             console.log(infoVuelo);
+           
         }
     })
 
     useEffect(() => {
         const storedNumInputs = sessionStorage.getItem("FlightContextUno") ? JSON.parse(sessionStorage.getItem("FlightContextUno")) : {};
+        const infoVueloDestiny = sessionStorage.getItem("destiny") ? JSON.parse(sessionStorage.getItem("destiny")) : {};
+        const infoVueloCity = sessionStorage.getItem("city") ? JSON.parse(sessionStorage.getItem("city")) : {};
+        const asientoId = sessionStorage.getItem("asiento") ? JSON.parse(sessionStorage.getItem("asiento")) : {};
+        setAsientoId(asientoId);
+        const {id, name, aeropuerto} = infoVueloDestiny;
+        setNameDestiny(name);
+        
         const { adultAmount, babyAmount, childAmount, exitDate, returnDate, simpleTravel } = storedNumInputs;
         if (storedNumInputs) {
             const numInputs = adultAmount + babyAmount + childAmount;
             setNumInputs(Number(numInputs));
+            const {id, name, aeropuerto} = infoVueloCity;
+            setNameCity(name);
+            setExitDate(exitDate);
+            setReturnDate(returnDate);
+            setSimpleTravel(simpleTravel);
+            
         }
-        console.log(aboutFlight, storageCity,storageDestiny);
+        
     }, []);
 
 
@@ -69,6 +92,7 @@ const FormularioCompra = () => {
     const renderInputs = () => {
         const inputs = [];
         for (let i = 0; i < numInputs; i++) {
+           
             inputs.push(
                 <Form.Input
                     key='nombre'
@@ -132,7 +156,7 @@ const FormularioCompra = () => {
                     onClose={() => setOpen(false)}
                     onOpen={() => onSubmit ? setOpen(true) : setOpen(false)}
                     trigger={<Button type='submit'>Enviar</Button>}
-                    style={{width:'20%'}}
+                    style={{width:'30%'}}
                 >
                     <Modal.Header>Gracias por tu compra!</Modal.Header>
                     <Modal.Content>
@@ -144,6 +168,14 @@ const FormularioCompra = () => {
                                     <h4 className='informacion'>Documento: <span>{`${documento ? documento.slice(0, 6) : ''}****`}</span> </h4>
                                     <h5 className='informacion'>Tel: <span>{tel}</span> </h5>
                                     <h4 className='informacion'>Cuenta Bancaria: <span>{`***********${nTarjetaCredito ? nTarjetaCredito.slice(14) : ''} `}</span> </h4>
+                                    <h2>Información de vuelo:</h2>
+                                    <h4 className='informacion'>Salida: <span>{nameCity}</span></h4>
+                                    <h4 className='informacion'>Destino: <span>{nameDestiny}</span></h4>
+                                    <h4 className='informacion'>Fecha de salida: <span>{exitDate}</span></h4>
+                                    {
+                                        !simpleTravel && <h4 className='informacion'>Fecha de regreso: <span>{returnDate}</span></h4>
+                                    }
+                                    <h4 className='informacion'>Asiento: <span>{asientoId}</span></h4>
                                 </div>
 
                             }

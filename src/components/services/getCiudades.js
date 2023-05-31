@@ -20,7 +20,7 @@ export const getTime = async() => {
         // console.log(data);
         return dates;
     } catch (error) {
-        // console.log(error);
+        console.log(error);
         return [];
     }
 }

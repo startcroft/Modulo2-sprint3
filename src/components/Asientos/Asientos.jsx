@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { StylesAsientos } from './StylesAsientos';
 import { getCiudades } from '../services/getCiudades';
-import { ClassNames } from '@emotion/react';
+
+
 
 const Asientos = () => {
   const [sillas, setSillas] = useState([]);
@@ -13,13 +14,14 @@ const Asientos = () => {
 
   const handleClickSilla = (id) => {
     const boton = sillas.find(silla => silla.id === id);
-
+    
     if (boton && boton.disponible) {
       const numeroAsientosAdulto = usuarioAdulto + usuarioBebe + usuarioNino;
       const asientosSeleccionados = sillas.filter(silla => silla.seleccionado).length;
       if (asientosSeleccionados < numeroAsientosAdulto) {
         const sillasActualizadas = sillas.map(silla => {
           if (silla.id === id) {
+            sessionStorage.setItem("asiento", JSON.stringify(silla.id));
             return { ...silla, seleccionado: true, color: '#9e247b' };
           }
           return silla;
@@ -41,7 +43,6 @@ const Asientos = () => {
       .catch((error) => {
         console.log(error);
       });
-
   }, [sillas]);
 
   const cantidadUsuarios = () => {
@@ -51,7 +52,6 @@ const Asientos = () => {
     setUsuarioNino(childAmount)
     setUsuarioBebe(babyAmount)
     setSimpleTravel(simpleTravel);
-
   }
 
 
